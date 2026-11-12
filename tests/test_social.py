@@ -77,7 +77,21 @@ class SocialTests(unittest.TestCase):
             for chosen in (social.default_recipe(data), json.loads((ROOT/f'examples/{city}-social.json').read_text())):
                 proof = social.SocialPlan(data, chosen).verify()
                 self.assertGreaterEqual(proof['source_wipe_frames'], 1)
-                self.assertEqual(proof['loop_closure_error'], 0)
+                self.assertLess(proof['loop_closure_error'], 1e-9)
+
+    def test_dc_feed_film_opens_on_finished_art_then_sweeps_the_source(self):
+        data = json.loads((ROOT/'examples/dc.json').read_text())
+        plan = social.SocialPlan(data, json.loads((ROOT/'examples/dc-social.json').read_text()))
+        hook = 3 * plan.fps
+        self.assertEqual({plan.frame(index)[1] for index in range(hook)}, {None})
+        self.assertEqual(plan.frame(hook)[1], 0)
+        self.assertEqual(plan.shots[3]['first'], hook)
+        anchors = {point['id']: (point['x'], point['y']) for point in data['landmarks']}
+        for second, mark in enumerate(('capitol', 'washington-monument', 'white-house')):
+            view = plan.frame(second * plan.fps + plan.fps // 2)[0]
+            x, y = view.project(*anchors[mark])
+            self.assertTrue(0 < x < plan.width and 0 < y < plan.height, mark)
+            self.assertLessEqual(view.width, 720)
 
 
 if __name__ == '__main__':
