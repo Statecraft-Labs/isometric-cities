@@ -6,7 +6,7 @@ Real neighbourhoods as isometric pixel-art maps, made on your Mac by you and a c
 
 [![Edinburgh](examples/readme/edinburgh.gif)](examples/edinburgh.png)
 
-[Watch DC](https://github.com/Statecraft-Labs/isometric-cities/releases/download/v0.4.1/washington-dc.mp4) · [Make your city](https://github.com/Statecraft-Labs/isometric-cities/releases/download/v0.4.1/make-your-city.mp4)
+[Watch DC](https://github.com/Statecraft-Labs/isometric-cities/releases/download/v0.4.2/washington-dc.mp4) · [Make your city](https://github.com/Statecraft-Labs/isometric-cities/releases/download/v0.4.2/make-your-city.mp4)
 
 ## Ask for your city
 
