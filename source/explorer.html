@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>__TITLE__</title>
+<style>
+:root{color-scheme:dark;--ink:#f1f1e9;--panel:#1c2226e8;--line:#ffffff26;--accent:#e2d9b8}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);font:13px system-ui;background:#15171b;overflow:hidden}button,a,input{font:inherit}button,a{color:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+#view{position:fixed;inset:0;overflow:hidden;touch-action:none;cursor:grab;background:#15171b}#view:active{cursor:grabbing}.clip{position:absolute;inset:0;pointer-events:none}.world{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform}.world img{position:absolute;max-width:none;pointer-events:none;user-select:none;image-rendering:pixelated}.poster{inset:0}.clip[hidden]{display:none}
+nav{position:fixed;z-index:5;bottom:max(18px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;gap:3px;align-items:center;width:max-content;max-width:calc(100% - 20px);padding:5px;background:var(--panel);border:1px solid var(--line);border-radius:15px;box-shadow:0 6px 30px #0004}nav button{display:inline-flex;justify-content:center;align-items:center;min-height:44px;border:0;background:transparent;border-radius:10px;white-space:nowrap}nav button[aria-pressed=true],nav button[aria-expanded=true]{background:#ffffff20}nav button:hover{background:#ffffff18}.icon{width:44px;flex:none;font-size:17px;padding:0!important}nav button:disabled{opacity:.35;cursor:default}#cities{display:flex;gap:4px;padding-bottom:8px;margin-bottom:6px;border-bottom:1px solid var(--line)}#cities a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:9px;text-decoration:none}#cities a[aria-current=page]{background:#ffffff20}
+#places{position:fixed;z-index:6;bottom:88px;left:50%;transform:translateX(-50%);width:360px;max-width:calc(100% - 24px);max-height:60dvh;overflow:auto;overscroll-behavior:contain;padding:10px;background:#1c2226f5;border:1px solid var(--line);border-radius:14px}#places[hidden]{display:none}#place-list{display:grid;grid-template-columns:1fr 1fr;gap:3px}#place-list button{min-height:44px;padding:8px 10px;border:0;border-radius:8px;background:transparent;color:inherit;text-align:left}#place-list button:hover,#place-list button[aria-current=location]{background:#ffffff20}
+#pill{position:fixed;z-index:4;top:24px;left:50%;transform:translateX(-50%);max-width:calc(100% - 32px);padding:9px 14px;border:1px solid var(--line);border-radius:99px;background:var(--panel);opacity:0;transition:opacity .3s;pointer-events:none;text-align:center}#pill.visible{opacity:1}
+#divider{position:fixed;z-index:4;top:0;bottom:0;width:28px;transform:translateX(-50%);cursor:col-resize;touch-action:none}#divider[hidden]{display:none}#divider:focus-visible{outline:0}#divider:focus-visible:after{outline:2px solid var(--accent);outline-offset:3px}#divider:before{content:"";position:absolute;top:0;bottom:0;left:13px;width:2px;background:#fff9;box-shadow:0 0 4px #0005}#divider:after{content:"↔";position:absolute;top:45%;left:0;width:28px;height:38px;border:1px solid #fff5;background:var(--panel);border-radius:9px;display:grid;place-items:center}
+#mini{position:fixed;z-index:4;right:18px;bottom:80px;width:170px;aspect-ratio:var(--map-aspect);border:1px solid #ffffff50;border-radius:8px;background:#15171b;overflow:hidden;cursor:crosshair;touch-action:none;box-shadow:0 4px 22px #0004}#mini img{display:block;width:100%;height:100%;pointer-events:none}#extent{position:absolute;border:1px solid #fff;background:#ffffff15;pointer-events:none;box-shadow:0 0 0 999px #0003}#mini[hidden]{display:none}
+#info{position:fixed;z-index:6;bottom:80px;right:18px;max-width:600px;width:calc(100% - 36px);max-height:65dvh;overflow:auto;padding:20px;background:#1c2226f5;border:1px solid var(--line);border-radius:14px;font-size:12px;line-height:1.6}#info[hidden]{display:none}#info p{white-space:pre-wrap;margin:0 0 12px}#info a{color:var(--accent)}#info pre{white-space:pre-wrap;overflow-wrap:anywhere;font:11px ui-monospace,monospace}summary{cursor:pointer}
+@media(max-width:500px){nav{gap:0;padding:4px}#previous{display:none}#mini{width:140px;right:12px}#pill{top:max(18px,env(safe-area-inset-top))}}@media(max-width:340px){nav{gap:0;padding:2px}#overview{display:none}}
+@media(prefers-reduced-motion:reduce){#pill{transition:none}}
+</style>
+</head>
+<body>
+<div id="view" tabindex="0" role="region" aria-label="City map. Drag or pinch. Number keys visit landmarks; brackets move between places; zero fits the map.">
+  <div class="world" id="art-world"><img class="poster" id="picture" draggable="false" alt="City artwork"></div>
+  <div class="clip" id="source-clip" hidden><div class="world" id="source-world"><img class="poster" id="source-picture" draggable="false" alt="Registered source"></div></div>
+</div>
+<div id="divider" role="slider" tabindex="0" aria-label="Source comparison" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" hidden></div>
+<div id="pill" aria-live="polite"></div>
+<div id="mini" role="button" tabindex="0" aria-label="Map overview"><img id="mini-picture" alt=""><span id="extent"></span></div>
+<nav aria-label="Map controls">
+  <button class="icon" id="places-toggle" aria-label="Choose a place" title="Choose a place" aria-expanded="false" aria-controls="places">☷</button>
+  <button class="icon" id="previous" aria-label="Previous landmark" title="Previous landmark [">‹</button>
+  <button class="icon" id="next" aria-label="Next landmark" title="Next landmark ]">›</button>
+  <button class="icon" id="source" aria-label="Compare source" title="Compare source" aria-pressed="false">◐</button>
+  <button class="icon" id="fit" aria-label="Fit whole map" title="Fit whole map · 0">⤢</button>
+  <button class="icon" id="tour" aria-label="Play tour" title="Play tour · Space" aria-pressed="false">▶</button>
+  <button class="icon" id="overview" aria-label="Toggle overview" title="Overview · M" aria-pressed="true">⌖</button>
+  <button class="icon" id="about" aria-label="Credits and provenance" title="Credits and provenance" aria-expanded="false" aria-controls="info">ⓘ</button>
+</nav>
+<section id="places" hidden aria-label="Places"><div id="cities"></div><div id="place-list"></div></section>
+<section id="info" hidden aria-label="Credits and provenance"><p id="status"></p><p id="credits"></p><p id="licence"></p><a id="download" download="provenance.json">Provenance ↓</a><details><summary>Camera and method</summary><pre id="method"></pre></details></section>
+<script>
+'use strict';
+const DATA=__DATA__, ART=__ART__, SOURCE=__SOURCE__;
+const $=id=>document.getElementById(id),view=$('view'),W=DATA.width,H=DATA.height;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)'),clamp=(n,a,b)=>Math.max(a,Math.min(b,n)),ease=t=>t*t*(3-2*t);
+const route=(DATA.landmarks||[]).map((p,i)=>({...p,id:p.id||String(i+1)}));
+const pointers=new Map(),worlds=[$('art-world'),$('source-world')],tileMaps=[new Map(),new Map()];
+let vw=0,vh=0,s=1,x=0,y=0,fitted=false,initialised=false,compare=false,reveal=50,current=0,playing=false,raf=null,animation=null,tourStart=null,lastTileTime=-Infinity,pillTimer=null,tourBase=0,tourFrom=null,miniUser=null;
+const minScale=()=>Math.min(vw/W,vh/H),maxScale=()=>Math.max(4,minScale()),pose=()=>({s,x,y});
+for(const world of worlds){world.style.width=W+'px';world.style.height=H+'px'}
+for(const id of ['picture','source-picture']){$(id).style.width=W+'px';$(id).style.height=H+'px'}
+$('picture').src=ART;$('source-picture').src=SOURCE;$('mini-picture').src=ART;
+$('mini').style.setProperty('--map-aspect',W+'/'+H);
+function bound(){s=clamp(s,minScale(),maxScale());x=W*s<=vw?(vw-W*s)/2:clamp(x,vw-W*s,0);y=H*s<=vh?(vh-H*s)/2:clamp(y,vh-H*s,0)}
+function refreshTiles(now=performance.now()){
+  if(!DATA.viewer_tiles)return;
+  for(let layer=0;layer<2;layer++){
+    if(layer===1&&!compare)continue;
+    const spec=DATA.viewer_tiles[layer],cache=tileMaps[layer],needed=new Set();
+    const level=clamp(Math.ceil(spec.max_level+Math.log2(s*(devicePixelRatio||1))),0,spec.max_level),size=spec.levels[String(level)];
+    const sx=W/size.width,sy=H/size.height,tile=spec.tile_size,pad=spec.overlap;
+    const c0=clamp(Math.floor((-x/s)/sx/tile)-1,0,size.columns-1),c1=clamp(Math.floor(((vw-x)/s)/sx/tile)+1,0,size.columns-1);
+    const r0=clamp(Math.floor((-y/s)/sy/tile)-1,0,size.rows-1),r1=clamp(Math.floor(((vh-y)/s)/sy/tile)+1,0,size.rows-1);
+    for(let row=r0;row<=r1;row++)for(let col=c0;col<=c1;col++){
+      const key=`${level}/${col}_${row}`,left=Math.max(0,col*tile-pad),top=Math.max(0,row*tile-pad),right=Math.min(size.width,(col+1)*tile+pad),bottom=Math.min(size.height,(row+1)*tile+pad);
+      needed.add(key);let image=cache.get(key);
+      if(!image){image=document.createElement('img');image.alt='';image.draggable=false;image.decoding='async';image.style.cssText=`left:${left*sx}px;top:${top*sy}px;width:${(right-left)*sx}px;height:${(bottom-top)*sy}px`;image.src=`${layer?'source_files':'map_files'}/${key}.png`;worlds[layer].appendChild(image);cache.set(key,image)}
+      image.dataset.seen=String(now);
+    }
+    for(const [key,image] of cache){if(!needed.has(key)&&now-Number(image.dataset.seen)>1000){image.remove();cache.delete(key)}}
+  }
+}
+function draw(){bound();for(const world of worlds)world.style.transform=`translate(${x}px,${y}px) scale(${s})`;const left=clamp(-x/s/W,0,1),top=clamp(-y/s/H,0,1);$('extent').style.cssText=`left:${left*100}%;top:${top*100}%;width:${Math.min(1,vw/s/W)*100}%;height:${Math.min(1,vh/s/H)*100}%`;const now=performance.now();if(now-lastTileTime>70){refreshTiles(now);lastTileTime=now}schedule()}
+function setPose(p){s=p.s;x=p.x;y=p.y;draw()}
+function stop(){clearTimeout(pillTimer);$('pill').classList.remove('visible');playing=false;tourStart=null;animation=null;$('tour').textContent='▶';$('tour').setAttribute('aria-pressed','false');$('tour').setAttribute('aria-label','Play tour')}
+function schedule(){if(raf===null)raf=requestAnimationFrame(tick)}
+function animate(target){stop();if(reduced.matches){setPose(target);return}animation={from:pose(),to:target,start:null};schedule()}
+function fit(soft=true){stop();closePlaces();fitted=true;const z=minScale(),target={s:z,x:(vw-W*z)/2,y:(vh-H*z)/2};soft?animate(target):setPose(target)}
+function hero(point){const cy=point.y-Number(point.look_up||0),preferred=Math.max(.5,Math.min(1,vw/(point.view_width||1024)));const centred=vh>vw?Math.min(1,Math.max(vw/(2*Math.max(1,Math.min(point.x,W-point.x))),vh/(2*Math.max(1,Math.min(cy,H-cy))))):0;const z=clamp(Number(point.zoom??DATA.hero_zoom??Math.max(preferred,centred)),Math.max(vw/W,vh/H),maxScale());return {s:z,x:vw/2-point.x*z,y:vh/2-cy*z}}
+function notify(point){clearTimeout(pillTimer);$('pill').textContent=point.short_name||point.name||'';$('pill').classList.add('visible');pillTimer=setTimeout(()=>$('pill').classList.remove('visible'),1500)}
+function closePlaces(){const wasOpen=!$('places').hidden;$('places').hidden=true;$('places-toggle').setAttribute('aria-expanded','false');if(wasOpen)$('places-toggle').focus()}
+function visit(index,soft=true,link=true){if(!route.length)return;stop();closePlaces();fitted=false;current=(index+route.length)%route.length;const point=route[current];for(const [i,b] of [...$('place-list').children].entries())b.setAttribute('aria-current',i===current?'location':'false');soft?animate(hero(point)):setPose(hero(point));notify(point);if(link)history.replaceState(null,'','#'+encodeURIComponent(DATA.city_id||'map')+'/'+encodeURIComponent(point.id))}
+function zoom(f,cx,cy){stop();fitted=false;const z=clamp(s*f,minScale(),maxScale());x=cx-(cx-x)*z/s;y=cy-(cy-y)*z/s;s=z;draw()}
+function tick(now){raf=null;if(animation){if(animation.start===null)animation.start=now;const a=animation,t=clamp((now-a.start)/600,0,1),q=ease(t);s=a.from.s+(a.to.s-a.from.s)*q;x=a.from.x+(a.to.x-a.from.x)*q;y=a.from.y+(a.to.y-a.from.y)*q;if(t===1)animation=null;draw()}
+  if(playing){if(tourStart===null)tourStart=now;const p=(now-tourStart)/6000,index=(tourBase+Math.floor(p))%route.length,f=p-Math.floor(p),a=hero(route[index]),b=hero(route[(index+1)%route.length]),q=ease(clamp((f-.5)*2,0,1));if(current!==index){current=index;notify(route[index])}const target={s:a.s+(b.s-a.s)*q,x:a.x+(b.x-a.x)*q,y:a.y+(b.y-a.y)*q},intro=ease(clamp((now-tourStart)/600,0,1));s=tourFrom.s+(target.s-tourFrom.s)*intro;x=tourFrom.x+(target.x-tourFrom.x)*intro;y=tourFrom.y+(target.y-tourFrom.y)*intro;draw()}
+  if(animation||playing)schedule();else refreshTiles(now);
+}
+function setCompare(value){stop();closePlaces();compare=value;$('source').setAttribute('aria-pressed',String(value));$('source-clip').hidden=!value;$('divider').hidden=!value;setReveal(reveal);refreshTiles()}
+function setReveal(value){reveal=clamp(value,0,100);$('source-clip').style.clipPath=`inset(0 ${100-reveal}% 0 0)`;$('divider').style.left=reveal+'%';$('divider').setAttribute('aria-valuenow',String(Math.round(reveal)))}
+function toggleMini(){stop();$('mini').hidden=!$('mini').hidden;miniUser=!$('mini').hidden;$('overview').setAttribute('aria-pressed',String(!$('mini').hidden))}
+for(const link of DATA.navigation||[]){const a=document.createElement('a');a.textContent=link.name;a.href=link.href;if(link.id===DATA.city_id)a.setAttribute('aria-current','page');a.onclick=stop;$('cities').appendChild(a)}
+for(const [index,point] of route.entries()){const b=document.createElement('button');b.textContent=point.short_name||point.name;b.onclick=()=>visit(index);$('place-list').appendChild(b)}
+$('places-toggle').onclick=()=>{stop();const opening=$('places').hidden;$('places').hidden=!opening;$('places-toggle').setAttribute('aria-expanded',String(opening));if(opening){$('info').hidden=true;$('about').setAttribute('aria-expanded','false');$('place-list').children[current]?.focus()}};
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#places,#places-toggle'))closePlaces()});
+$('previous').onclick=()=>visit(current-1);$('next').onclick=()=>visit(current+1);$('previous').disabled=$('next').disabled=!route.length;
+$('source').onclick=()=>setCompare(!compare);$('fit').onclick=()=>fit();$('overview').onclick=toggleMini;
+$('tour').onclick=()=>{if(playing){stop();return}if(reduced.matches||!route.length)return;animation=null;fitted=false;playing=true;tourStart=null;tourBase=current;tourFrom=pose();notify(route[current]);$('tour').textContent='Ⅱ';$('tour').setAttribute('aria-pressed','true');$('tour').setAttribute('aria-label','Pause tour');schedule()};
+$('about').onclick=()=>{stop();closePlaces();const visible=$('info').hidden;$('info').hidden=!visible;$('about').setAttribute('aria-expanded',String(visible))};
+const text=v=>typeof v==='string'?v:JSON.stringify(v,null,2);
+$('status').textContent=DATA.status||'Source and art need visual review.';$('credits').textContent=text(DATA.credits);$('licence').textContent=text(DATA.licence||DATA.license||'');$('method').textContent=JSON.stringify({camera:DATA.camera,method:DATA.method,limitations:DATA.limitations},null,2);$('download').href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(DATA,null,2));
+view.addEventListener('wheel',e=>{e.preventDefault();const r=view.getBoundingClientRect();zoom(Math.exp(-e.deltaY*.0015),e.clientX-r.left,e.clientY-r.top)},{passive:false});
+view.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;stop();fitted=false;view.setPointerCapture(e.pointerId);pointers.set(e.pointerId,[e.clientX,e.clientY])});
+view.addEventListener('pointermove',e=>{if(!pointers.has(e.pointerId))return;const previous=[...pointers.values()],old=pointers.get(e.pointerId);pointers.set(e.pointerId,[e.clientX,e.clientY]);if(pointers.size===1){x+=e.clientX-old[0];y+=e.clientY-old[1];draw()}else if(pointers.size===2){const next=[...pointers.values()],mid=a=>[(a[0][0]+a[1][0])/2,(a[0][1]+a[1][1])/2],a=mid(previous),b=mid(next),distance=a=>Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]),d=distance(previous),r=view.getBoundingClientRect();if(d>0){zoom(distance(next)/d,a[0]-r.left,a[1]-r.top);x+=b[0]-a[0];y+=b[1]-a[1];draw()}}});
+for(const name of ['pointerup','pointercancel','lostpointercapture'])view.addEventListener(name,e=>pointers.delete(e.pointerId));
+view.addEventListener('dblclick',e=>{const r=view.getBoundingClientRect(),target=s<1?1:Math.min(4,Math.floor(s)+1);zoom(target/s,e.clientX-r.left,e.clientY-r.top)});
+function dragControl(element,move){let active=false;element.addEventListener('pointerdown',e=>{stop();active=true;element.setPointerCapture(e.pointerId);move(e)});element.addEventListener('pointermove',e=>{if(active)move(e)});for(const name of ['pointerup','pointercancel','lostpointercapture'])element.addEventListener(name,()=>{active=false})}
+dragControl($('divider'),e=>setReveal(e.clientX/vw*100));
+dragControl($('mini'),e=>{fitted=false;const r=$('mini').getBoundingClientRect();x=vw/2-clamp((e.clientX-r.left)/r.width,0,1)*W*s;y=vh/2-clamp((e.clientY-r.top)/r.height,0,1)*H*s;draw()});
+$('divider').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();stop();setReveal(e.key==='Home'?0:e.key==='End'?100:reveal+(e.key==='ArrowRight'?5:-5))}});
+$('mini').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fit()}});
+document.addEventListener('keydown',e=>{const k=e.key;if(k==='Escape'){closePlaces();$('info').hidden=true;$('about').setAttribute('aria-expanded','false');return}if(e.target.matches('input,textarea,summary')||e.target===$('divider'))return;if(playing&&k!==' ')stop();if(/^[1-9]$/.test(k)){e.preventDefault();visit(Number(k)-1)}else if(k==='['||k===']'){e.preventDefault();visit(current+(k===']'?1:-1))}else if(k.toLowerCase()==='m'){e.preventDefault();toggleMini()}else if(k===' '&&e.target===view){e.preventDefault();$('tour').click()}else if(k==='0'){e.preventDefault();fit()}else if(['+','=','-'].includes(k)){e.preventDefault();zoom(k==='-'?.5:2,vw/2,vh/2)}else if(k.startsWith('Arrow')&&e.target===view){e.preventDefault();stop();fitted=false;x+=k==='ArrowLeft'?60:k==='ArrowRight'?-60:0;y+=k==='ArrowUp'?60:k==='ArrowDown'?-60:0;draw()}});
+function hashPlace(){let id;try{id=decodeURIComponent(location.hash.split('/').pop().replace(/^#/,''))}catch{return -1}return route.findIndex(p=>p.id===id)}
+addEventListener('hashchange',()=>{const i=hashPlace();if(i>=0)visit(i,true,false)});
+function resize(){const cx=(vw/2-x)/s,cy=(vh/2-y)/s;vw=view.clientWidth;vh=view.clientHeight;if(!vw||!vh)return;if(miniUser===null){$('mini').hidden=vw<500;$('overview').setAttribute('aria-pressed',String(!$('mini').hidden))}if(!initialised){initialised=true;const linked=hashPlace(),opening=route.findIndex(p=>p.id===DATA.opening_landmark);if(route.length){visit(linked>=0?linked:Math.max(0,opening),false,false);return}fit(false);return}if(fitted)fit(false);else{stop();x=vw/2-cx*s;y=vh/2-cy*s;draw()}}
+function preference(){if(reduced.matches)stop();$('tour').disabled=reduced.matches||!route.length}
+reduced.addEventListener('change',preference);document.addEventListener('wheel',()=>stop(),{passive:true});document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});new ResizeObserver(resize).observe(view);preference();resize();
+</script>
+</body>
+</html>

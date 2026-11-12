@@ -1,0 +1,567 @@
+{
+  "id": "capitol-hill-dc",
+  "title": "Washington, DC",
+  "aliases": [
+    "Capitol Hill",
+    "Capitol Hill DC",
+    "Capitol Hill Washington DC",
+    "Capitol Hill Washington",
+    "Washington DC",
+    "Washington D C",
+    "DC",
+    "United States Capitol"
+  ],
+  "origin": {
+    "lat": 38.89207521758741,
+    "lon": -77.02276987616997
+  },
+  "bbox": [
+    38.86774235527133,
+    -77.0538741673784,
+    38.91639968724495,
+    -76.99164436388718
+  ],
+  "patch_bbox": [
+    38.86774235527133,
+    -77.0538741673784,
+    38.91639968724495,
+    -76.99164436388718
+  ],
+  "landmarks": [
+    {
+      "id": "white-house",
+      "name": "White House",
+      "lat": 38.897676,
+      "lon": -77.03653
+    },
+    {
+      "id": "eeob",
+      "name": "Eisenhower Executive Office Building",
+      "lat": 38.89773,
+      "lon": -77.0393
+    },
+    {
+      "id": "treasury",
+      "name": "United States Treasury",
+      "lat": 38.89836,
+      "lon": -77.03451
+    },
+    {
+      "id": "lafayette",
+      "name": "Lafayette Square",
+      "lat": 38.89941,
+      "lon": -77.03661
+    },
+    {
+      "id": "ellipse",
+      "name": "The Ellipse",
+      "lat": 38.89396,
+      "lon": -77.03655
+    },
+    {
+      "id": "washington-monument",
+      "name": "Washington Monument",
+      "lat": 38.889484,
+      "lon": -77.035278
+    },
+    {
+      "id": "american-history",
+      "name": "National Museum of American History",
+      "lat": 38.89124,
+      "lon": -77.03003
+    },
+    {
+      "id": "natural-history",
+      "name": "National Museum of Natural History",
+      "lat": 38.89127,
+      "lon": -77.02591
+    },
+    {
+      "id": "smithsonian-castle",
+      "name": "Smithsonian Castle",
+      "lat": 38.88874,
+      "lon": -77.02601
+    },
+    {
+      "id": "national-gallery",
+      "name": "National Gallery of Art",
+      "lat": 38.8913,
+      "lon": -77.0199
+    },
+    {
+      "id": "air-space",
+      "name": "National Air and Space Museum",
+      "lat": 38.88816,
+      "lon": -77.01987
+    },
+    {
+      "id": "capitol",
+      "name": "United States Capitol",
+      "lat": 38.8898,
+      "lon": -77.00905
+    },
+    {
+      "id": "library",
+      "name": "Library of Congress",
+      "lat": 38.8887,
+      "lon": -77.0046
+    },
+    {
+      "id": "supreme-court",
+      "name": "Supreme Court",
+      "lat": 38.8906,
+      "lon": -77.00444
+    },
+    {
+      "id": "botanic",
+      "name": "United States Botanic Garden",
+      "lat": 38.88811,
+      "lon": -77.01234
+    },
+    {
+      "id": "grant",
+      "name": "Ulysses S. Grant Memorial",
+      "lat": 38.88977,
+      "lon": -77.01284
+    },
+    {
+      "id": "rayburn",
+      "name": "Rayburn House Office Building",
+      "lat": 38.88669,
+      "lon": -77.01061
+    },
+    {
+      "id": "cannon",
+      "name": "Cannon House Office Building",
+      "lat": 38.88676,
+      "lon": -77.00531
+    },
+    {
+      "id": "longworth",
+      "name": "Longworth House Office Building",
+      "lat": 38.88655,
+      "lon": -77.00854
+    },
+    {
+      "id": "russell",
+      "name": "Russell Senate Office Building",
+      "lat": 38.89278,
+      "lon": -77.00642
+    },
+    {
+      "id": "dirksen",
+      "name": "Dirksen Senate Office Building",
+      "lat": 38.89278,
+      "lon": -77.00511
+    },
+    {
+      "id": "hart",
+      "name": "Hart Senate Office Building",
+      "lat": 38.89278,
+      "lon": -77.00408
+    },
+    {
+      "id": "american-indian",
+      "name": "National Museum of the American Indian",
+      "lat": 38.88822,
+      "lon": -77.01698
+    }
+  ],
+  "photographic": {
+    "crs": 26985,
+    "source_span_m": 5000,
+    "terrain_cell_m": 4,
+    "rasters": {
+      "aerial": {
+        "url": "https://imagery.dcgis.dc.gov/dcgis/rest/services/Ortho/Ortho_2023/ImageServer",
+        "native_metres": 0.08,
+        "sample_metres": 0.5,
+        "year": 2023,
+        "licence": "CC-BY-4.0",
+        "max_export_pixels": 3600
+      },
+      "dtm": {
+        "url": "https://imagery.dcgis.dc.gov/dcgis/rest/services/Lidar/Hydro_Enforced_DTM_2024/ImageServer",
+        "sample_metres": 1,
+        "year": 2024,
+        "licence": "CC0-1.0"
+      }
+    },
+    "i3s_layer": "https://services.arcgis.com/neT9SoYxizqTHZPH/arcgis/rest/services/DC_3D_Buildings/SceneServer/layers/0",
+    "root_nodes": [
+      "root"
+    ],
+    "mesh_vertical_offset_m": 0,
+    "mesh_vertical_note": "Legacy layer has no heightModelInfo. No geoid shift is applied; lowest-vertex agreement with the NAVD88 DTM is measured and saved, not claimed as a declared survey datum.",
+    "camera": {
+      "width": 8192,
+      "height": 4096,
+      "pixels_per_metre": 2.5,
+      "azimuth_degrees": 225,
+      "elevation_degrees": 35.264389682754654,
+      "target_local_m": [
+        0,
+        0,
+        26
+      ]
+    },
+    "osm_parts_centre": {
+      "lat": 38.8898,
+      "lon": -77.00905
+    },
+    "explicit_osm_parts": [
+      "way/507459314",
+      "way/507459315",
+      "way/507459316",
+      "way/507459318",
+      "way/507459319",
+      "way/507459320",
+      "way/507459321",
+      "way/507459322",
+      "way/507832690",
+      "way/507842343"
+    ],
+    "attribution": "DC GIS / OCTO; District of Columbia Office of Planning / CyberCity 3D; \u00a9 OpenStreetMap contributors",
+    "source_refs": [
+      "https://catalog.data.gov/dataset/aerial-photography-orthophoto-2023",
+      "https://catalog.data.gov/dataset/2024-lidar-hydro-enforced-digital-terrain-model",
+      "https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Facility_and_Structure_WebMercator/MapServer/3",
+      "https://www.openstreetmap.org/copyright"
+    ],
+    "landmark_materials": {
+      "way/507459321": {
+        "wall": {
+          "kind": "columns",
+          "count": 36,
+          "source_refs": [
+            "https://www.aoc.gov/what-we-do/projects/dome-restoration-project/by-the-numbers"
+          ],
+          "interpretation": "Column count documented by AOC; drawn width, angular phase and recess shading are illustrative. Footprint and height bands remain mapped OSM geometry."
+        }
+      },
+      "way/507459319": {
+        "wall": {
+          "kind": "columns",
+          "count": 12,
+          "source_refs": [
+            "https://www.aoc.gov/what-we-do/projects/dome-restoration-project/by-the-numbers"
+          ],
+          "interpretation": "Column count documented by AOC; drawn width, angular phase and recess shading are illustrative. Footprint and height bands remain mapped OSM geometry."
+        }
+      },
+      "way/507459318": {
+        "wall": {
+          "kind": "columns",
+          "count": 12,
+          "source_refs": [
+            "https://www.aoc.gov/what-we-do/projects/dome-restoration-project/by-the-numbers"
+          ],
+          "interpretation": "Column count documented by AOC; drawn width, angular phase and recess shading are illustrative. Footprint and height bands remain mapped OSM geometry."
+        }
+      },
+      "way/507459316": {
+        "wall": {
+          "kind": "columns",
+          "count": 12,
+          "source_refs": [
+            "https://www.aoc.gov/what-we-do/projects/dome-restoration-project/by-the-numbers"
+          ],
+          "interpretation": "Column count documented by AOC; drawn width, angular phase and recess shading are illustrative. Footprint and height bands remain mapped OSM geometry."
+        }
+      },
+      "way/507459320": {
+        "roof": {
+          "kind": "ribs",
+          "count": 36,
+          "source_refs": [
+            "https://www.aoc.gov/what-we-do/projects/dome-restoration-project/by-the-numbers"
+          ],
+          "interpretation": "Illustrative meridian rhythm consistent with the dome articulation; rib count and width are drawing choices, not a separate survey.",
+          "illustrative": true
+        }
+      }
+    },
+    "mesh_max_nodes": 700,
+    "linear_facade_details": {
+      "relation/286501": {
+        "along_axis": "y",
+        "face_side": "min",
+        "face_offset_metres": 10,
+        "selection_half_width_metres": 19,
+        "length_metres": 34.0,
+        "count": 8,
+        "column_fraction": 0.44,
+        "source_refs": [
+          "https://www.supremecourt.gov/about/buildingfeatures.aspx"
+        ],
+        "interpretation": "Illustrative front row of eight columns on the existing west-facing pavilion wall. The Court documents sixteen total columns supporting the pediment; front-row placement, widths and relief are drawing choices. No footprint, roof, height or mesh vertex changes."
+      },
+      "way/66418809": {
+        "count": 10,
+        "length_metres": 30.48,
+        "along_axis": "y",
+        "face_side": "min",
+        "face_offset_metres": 20,
+        "selection_half_width_metres": 17,
+        "column_fraction": 0.3,
+        "base_band_metres": 2.2,
+        "top_band_metres": 12.05,
+        "source_refs": [
+          "https://tile.loc.gov/storage-services/public/gdcmassbookdig/roosescompaniong03wyet/roosescompaniong03wyet.pdf",
+          "https://www.aoc.gov/explore-capitol-campus/art/corinthian-columns"
+        ],
+        "interpretation": "LoC-archived guide documents a100ft-wide central West Front colonnade with10columns,8coupled. Shading on the existing marble plane is illustrative; phase, section and height are drawing conventions, not a reconstruction of exact paired spacing. No added geometry."
+      }
+    },
+    "source_limits": [
+      "Legacy 2013-era geometry and illustrative facades, not photogrammetric or surveyed building heights.",
+      "Expanded feature minimum-vertex/DTM p10 is about -21.7 m; many roof-only/elevated fragments may lack ground vertices. No guessed height shift is applied.",
+      "Current government DSM is redacted and is not used to invent missing roofs.",
+      "This registered scene combines 2023 orthophotography and older geometry; it intentionally does not reconstruct 2025\u20132026 White House East Wing/grounds changes."
+    ],
+    "landmark_geometry": {
+      "structures": [
+        {
+          "id": "white-house-south-portico",
+          "kind": "arc_colonnade",
+          "anchor": {
+            "lat": 38.897676,
+            "lon": -77.03653
+          },
+          "yaw_degrees": 1.05,
+          "offset_m": [
+            -3.37,
+            -11.8
+          ],
+          "radius_m": 9.3,
+          "columns": 6,
+          "base_z_m": 18.2,
+          "top_z_m": 31.26,
+          "decks": [
+            [
+              30.41,
+              0.85,
+              [
+                242,
+                241,
+                230
+              ]
+            ],
+            [
+              25.1,
+              0.3,
+              [
+                237,
+                236,
+                226
+              ]
+            ]
+          ],
+          "balustrade": {
+            "count": 35,
+            "bottom_z_m": 25.4,
+            "top_z_m": 26.35
+          },
+          "source_refs": [
+            "https://www.whitehousehistory.org/in-a-white-house-passageway",
+            "https://www.whitehousehistory.org/press-room/press-backgrounders/white-house-dimensions",
+            "https://obamawhitehouse.archives.gov/interactive-tour/south-portico/"
+          ],
+          "interpretation": "Shaft diameters, angular phase, mouldings, balcony/balustrade spacing and facade apertures. The legacy source heights are approximate; official height is retained as comparison evidence, not a guessed datum shift."
+        },
+        {
+          "id": "washington-monument",
+          "kind": "tapered_obelisk",
+          "anchor": {
+            "lat": 38.889484,
+            "lon": -77.035278
+          },
+          "replace_owners": [
+            102720
+          ],
+          "yaw_degrees": 1.05,
+          "height_m": 169.294,
+          "shaft_height_m": 152.4,
+          "base_width_m": 16.8021,
+          "upper_width_m": 10.5029,
+          "bands": [
+            [
+              0,
+              46.3296,
+              [
+                226,
+                220,
+                201
+              ]
+            ],
+            [
+              46.3296,
+              152.4,
+              [
+                237,
+                234,
+                220
+              ]
+            ]
+          ],
+          "windows": {
+            "z_band": [
+              149.2,
+              150.6
+            ],
+            "centres_m": [
+              -2.45,
+              2.45
+            ],
+            "half_width_m": 0.45
+          },
+          "flags": {
+            "count": 50,
+            "radius_m": 39.62,
+            "height_m": 7.62
+          },
+          "source_refs": [
+            "https://www.nps.gov/wamo/faqs.htm",
+            "https://pubs.nps.gov/eTIC/STMA-WEFA/WASH_807_D1803_0001_of_0071.pdf",
+            "https://www.archives.gov/federal-register/codification/proclamations/04064.html",
+            "https://parkplanning.nps.gov/showFile.cfm?projectID=31299&sfid=117584"
+          ],
+          "interpretation": "Marble RGB, small observation-opening widths, flag cloth, exact flag angular phase, approximately 39.62 m flag circle radius matched to the aerial plaza."
+        }
+      ],
+      "facades": [
+        {
+          "id": "white-house-main-facades",
+          "owners": [
+            67783,
+            102609
+          ],
+          "anchor": {
+            "lat": 38.897676,
+            "lon": -77.03653
+          },
+          "support_box_m": [
+            -31.4,
+            -22,
+            24.6,
+            30
+          ],
+          "wall_rgb": [
+            244,
+            243,
+            234
+          ],
+          "window_phase_m": 1.8,
+          "window_spacing_m": 4.25,
+          "window_width_m": [
+            1.45,
+            2.72
+          ],
+          "window_z_bands_m": [
+            [
+              18.4,
+              20.8
+            ],
+            [
+              23.0,
+              26.0
+            ],
+            [
+              28.0,
+              30.3
+            ],
+            [
+              34.0,
+              35.8
+            ]
+          ],
+          "mullion_phase_m": 2.08,
+          "opening": {
+            "box_m": [
+              -13.5,
+              -22,
+              7,
+              -12
+            ],
+            "keep_below_z_m": 18.2
+          },
+          "source_refs": [
+            "https://www.whitehousehistory.org/in-a-white-house-passageway",
+            "https://www.whitehousehistory.org/press-room/press-backgrounders/white-house-dimensions",
+            "https://obamawhitehouse.archives.gov/interactive-tour/south-portico/"
+          ],
+          "interpretation": "Shaft diameters, angular phase, mouldings, balcony/balustrade spacing and facade apertures. The legacy source heights are approximate; official height is retained as comparison evidence, not a guessed datum shift."
+        },
+        {
+          "id": "smithsonian-castle-seneca-sandstone",
+          "owners": [
+            67702
+          ],
+          "wall_rgb": [
+            148,
+            76,
+            58
+          ],
+          "source_refs": [
+            "https://siarchives.si.edu/history/smithsonian-institution-building-castle"
+          ],
+          "interpretation": "Material is documented; RGB and generic facade detail are illustrative. Actual roof colours and mesh geometry remain provider-derived."
+        },
+        {
+          "id": "arts-industries-polychrome-brick",
+          "owners": [
+            67487
+          ],
+          "wall_rgb": [
+            165,
+            78,
+            57
+          ],
+          "source_refs": [
+            "https://www.si.edu/stories/five-architecture-facts-about-arts-and-industries-building",
+            "https://www.nps.gov/places/arts-and-industries-building.htm"
+          ],
+          "interpretation": "The brick material is documented; RGB is illustrative. Generic existing window rhythm is unchanged. All aerial roof pixels and mesh geometry remain unchanged. The primary source mentions yellow, blue and black decorative bricks; this base-material correction does not claim to reconstruct their exact patterns."
+        },
+        {
+          "id": "capitol-marble-facades",
+          "owners": [
+            67825,
+            102657
+          ],
+          "wall_rgb": [
+            242,
+            241,
+            230
+          ],
+          "finish": "plain",
+          "source_refs": [
+            "https://www.aoc.gov/explore-capitol-campus/buildings-grounds/capitol-building",
+            "https://www.aoc.gov/explore-capitol-campus/art/corinthian-columns"
+          ],
+          "interpretation": "Existing legacy Capitol mesh and aerial roofs unchanged. Plain pale marble replaces the fictitious general office window grid. Source-bound central West Front column relief is separate and illustrative."
+        }
+      ]
+    },
+    "part_min_height": {
+      "way/507832690": {
+        "metres": 81.65639999999999,
+        "source_refs": [
+          "https://www.aoc.gov/explore-capitol-campus/art/statue-freedom",
+          "https://www.openstreetmap.org/way/507832690",
+          "https://www.openstreetmap.org/way/507459314"
+        ],
+        "interpretation": "Preserve mapped top87.6m and footprint. The AOC bronze figure is19ft6in tall; its base is top minus5.9436m. Existing globe/pedestal way507459314 already occupies76.2..81.7m, so the figure must not extend through it."
+      }
+    },
+    "legacy_part_replacement": {
+      "margin_metres": 6,
+      "source_refs": [
+        "https://www.openstreetmap.org/way/507459322",
+        "https://www.aoc.gov/explore-capitol-campus/art/corinthian-columns"
+      ],
+      "interpretation": "Measured source legacy dome shell reaches23.04m radius while mapped replacement union reaches18.93m. Six metres of support margin removes the overlapping legacy dome triangles above the existing replacement floor. Wing roofs and all retained source vertices are unchanged."
+    }
+  },
+  "caption_file": "examples/dc-caption.txt"
+}

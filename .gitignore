@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+.env
+.env.*
+outputs/
+models/
+*.safetensors
+*.gguf
+source/cities/
+source/lidar/
+source/*.hgt*

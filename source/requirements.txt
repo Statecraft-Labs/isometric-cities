@@ -1,0 +1,8 @@
+numpy==2.5.4
+pillow==13.0.0
+requests==2.34.2
+shapely==2.2.0
+rasterio==1.5.2
+pyproj==3.8.0
+scipy==1.18.1
+numba==0.68.1

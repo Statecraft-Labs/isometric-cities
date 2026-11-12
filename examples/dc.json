@@ -1,0 +1,374 @@
+{
+  "title": "Washington, DC",
+  "city_id": "dc",
+  "width": 8192,
+  "height": 4096,
+  "status": "Source-grounded illustrative pixel-art map",
+  "source_sha256": "1feba13d7d745da5f94c458caf0d0491aa0fb3533adcad7833ab7a8a330be386",
+  "image_sha256": "7cd2ebc4cc3f11a74ac9d3ee65a7b0f4258f18168c3e8e7ce01881a65c6cc001",
+  "camera": {
+    "type": "orthographic",
+    "azimuth_degrees": 225,
+    "elevation_degrees": 35.264389682754654,
+    "width": 8192,
+    "height": 4096,
+    "pixels_per_metre": 2.5,
+    "horizontal": [
+      0.7071067811865477,
+      -0.7071067811865475,
+      0.0
+    ],
+    "vertical": [
+      -0.40824829046386296,
+      -0.4082482904638631,
+      -0.816496580927726
+    ],
+    "depth": [
+      -0.5773502691896257,
+      -0.5773502691896258,
+      0.5773502691896257
+    ],
+    "target_local_m": [
+      0,
+      0,
+      26
+    ],
+    "origin_projected_metres": [
+      398024.63353732164,
+      136025.83398883298
+    ],
+    "pixel_matrix": [
+      [
+        1.7677669529663693,
+        -1.7677669529663687,
+        0.0,
+        4096.0
+      ],
+      [
+        -1.0206207261596574,
+        -1.0206207261596576,
+        -2.041241452319315,
+        2101.0722777603023
+      ]
+    ]
+  },
+  "method": {
+    "description": "Local Klein 9B q4 + Pixel Art Redmond; sequential neighbour-conditioned edits, not shared-latent denoising.",
+    "preset": "model-presets/pixelart-redmond-klein9b.json",
+    "caption_sha256": "c0de3343db86c05baad8bad5175e3ab124c33b0c5d572695ed5f1742862d7ad3",
+    "window": 1024,
+    "windows": 50,
+    "maximum_stride": 800,
+    "feather_pixels": 128,
+    "raw_sha256": "64e08536bed05829f90b08c5d47ee277c293cd9e46f808e72d850c8027eb73d3",
+    "steps": 4,
+    "guidance": 1,
+    "adapter_scale": 0.7,
+    "seed_start": 4601,
+    "finishing": {
+      "recipe": "examples/dc-finish.json",
+      "recipe_sha256": "75bb62c85446b9f16506f3149ca4aae98d88d9c001200d2a5e1e427b6aa93b81",
+      "changes": [
+        {
+          "name": "Washington Monument source-checked lawn repair",
+          "pixels": 325431,
+          "image_sha256": "99f76b75918817cda8c964549babf3cd364c3861db65abb2cb0d2ba48d9e9509",
+          "position": [
+            1760,
+            3072
+          ]
+        },
+        {
+          "name": "Source-registered White House North Lawn fountain",
+          "pixels": 4648,
+          "image_sha256": "65fd9a3d6b4cd1d85df9dc19c42bf5dc944744f94a0b4403a9d0587fc20b4101",
+          "position": [
+            706,
+            2534
+          ]
+        }
+      ],
+      "no_resampling": true,
+      "source_checked_repair_jobs": 1,
+      "reviewed_native_repairs": true,
+      "no_global_map_resampling": true
+    }
+  },
+  "limitations": [
+    "Historical mixture of 2023 aerial, 2024 terrain, legacy building mesh and 2026 OSM; 2025-2026 White House changes are absent.",
+    "Facade windows, ornament and tiny statues are illustrative. Government DSM redaction prevents current measured tree heights.",
+    "Sequential neighbour-conditioned edits and overlap feathering; not shared-latent denoising."
+  ],
+  "credits": "DC GIS / OCTO 2023 aerial imagery, CC BY 4.0; DC 2024 terrain, CC0; District of Columbia Office of Planning / CyberCity 3D building geometry. \u00a9 OpenStreetMap contributors, ODbL. Facade windows and column relief are illustrative.",
+  "media_attribution": "DC GIS / OCTO 2023 aerial imagery, CC BY 4.0; DC 2024 terrain, CC0; District of Columbia Office of Planning / CyberCity 3D building geometry. \u00a9 OpenStreetMap contributors, ODbL. Facade windows and column relief are illustrative.",
+  "licence": "Code MIT. Model: FLUX Non-Commercial; adapter: Apache-2.0. Source attribution and source licences retained. Edinburgh imagery distributed under CC BY-SA 4.0; DC source-derived imagery under CC BY 4.0.",
+  "regions": [],
+  "navigation": [
+    {
+      "id": "dc",
+      "name": "DC",
+      "href": "../dc/viewer.html"
+    },
+    {
+      "id": "edinburgh",
+      "name": "Edinburgh",
+      "href": "../edinburgh/viewer.html"
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "capitol",
+      "name": "United States Capitol",
+      "lat": 38.8898,
+      "lon": -77.00905,
+      "x": 6646.88180703831,
+      "y": 1090.4900266430507,
+      "short_name": "Capitol",
+      "view_width": 1024,
+      "look_up": 12.483
+    },
+    {
+      "id": "white-house",
+      "name": "White House",
+      "lat": 38.897676,
+      "lon": -77.03653,
+      "x": 886.4265693088882,
+      "y": 2648.60700143336,
+      "short_name": "White House",
+      "view_width": 1024,
+      "look_up": -21.807,
+      "zoom": 1
+    },
+    {
+      "id": "washington-monument",
+      "name": "Washington Monument",
+      "lat": 38.889484,
+      "lon": -77.035278,
+      "x": 2685.43827138049,
+      "y": 3476.786552380212,
+      "short_name": "Monument",
+      "view_width": 1024,
+      "look_up": 129.919
+    },
+    {
+      "id": "smithsonian-castle",
+      "name": "Smithsonian Castle",
+      "lat": 38.88874,
+      "lon": -77.02601,
+      "x": 4253.2651017920525,
+      "y": 2746.032807880201,
+      "short_name": "Smithsonian Castle",
+      "view_width": 1024,
+      "look_up": 22.381
+    },
+    {
+      "id": "library",
+      "name": "Library of Congress",
+      "lat": 38.8887,
+      "lon": -77.0046,
+      "x": 7545.255115054193,
+      "y": 816.9100801989655,
+      "short_name": "Library",
+      "view_width": 1024,
+      "look_up": 7.985
+    },
+    {
+      "id": "supreme-court",
+      "name": "Supreme Court",
+      "lat": 38.8906,
+      "lon": -77.00444,
+      "x": 7196.964932229614,
+      "y": 585.6067331874881,
+      "short_name": "Supreme Court",
+      "view_width": 1024,
+      "look_up": 16.259
+    },
+    {
+      "id": "national-gallery",
+      "name": "National Gallery of Art",
+      "lat": 38.8913,
+      "lon": -77.0199,
+      "x": 4688.319422424352,
+      "y": 1926.3840507137186,
+      "short_name": "National Gallery",
+      "view_width": 1024
+    },
+    {
+      "id": "natural-history",
+      "name": "National Museum of Natural History",
+      "lat": 38.89127,
+      "lon": -77.02591,
+      "x": 3772.270146346462,
+      "y": 2463.2157676374322,
+      "short_name": "Natural History",
+      "view_width": 1024,
+      "look_up": 22.181
+    },
+    {
+      "id": "air-space",
+      "name": "National Air and Space Museum",
+      "lat": 38.88816,
+      "lon": -77.01987,
+      "x": 5308.968005400853,
+      "y": 2276.2766553855226,
+      "short_name": "Air and Space",
+      "view_width": 1024
+    },
+    {
+      "id": "eeob",
+      "name": "Eisenhower Executive Office Building",
+      "lat": 38.89773,
+      "lon": -77.0393,
+      "x": 450.8842160904451,
+      "y": 2892.403188333418,
+      "short_name": "Eisenhower Executive Office Building",
+      "view_width": 1024,
+      "look_up": 65.828
+    },
+    {
+      "id": "treasury",
+      "name": "United States Treasury",
+      "lat": 38.89836,
+      "lon": -77.03451,
+      "x": 1062.1350664634483,
+      "y": 2402.2227139595084,
+      "short_name": "United States Treasury",
+      "view_width": 1024
+    },
+    {
+      "id": "lafayette",
+      "name": "Lafayette Square",
+      "lat": 38.89941,
+      "lon": -77.03661,
+      "x": 534.0166514171424,
+      "y": 2457.935895930058,
+      "short_name": "Lafayette Square",
+      "view_width": 1024
+    },
+    {
+      "id": "ellipse",
+      "name": "The Ellipse",
+      "lat": 38.89396,
+      "lon": -77.03655,
+      "x": 1612.2799175693808,
+      "y": 3096.319420057591,
+      "short_name": "The Ellipse",
+      "view_width": 1024
+    },
+    {
+      "id": "american-history",
+      "name": "National Museum of American History",
+      "lat": 38.89124,
+      "lon": -77.03003,
+      "x": 3146.1115065682916,
+      "y": 2818.966424678566,
+      "short_name": "National Museum of American History",
+      "view_width": 1024
+    },
+    {
+      "id": "botanic",
+      "name": "United States Botanic Garden",
+      "lat": 38.88811,
+      "lon": -77.01234,
+      "x": 6473.846163907781,
+      "y": 1618.0010497947185,
+      "short_name": "United States Botanic Garden",
+      "view_width": 1024
+    },
+    {
+      "id": "grant",
+      "name": "Ulysses S. Grant Memorial",
+      "lat": 38.88977,
+      "lon": -77.01284,
+      "x": 6071.445539374284,
+      "y": 1474.0018981046987,
+      "short_name": "Ulysses S. Grant Memorial",
+      "view_width": 1024
+    },
+    {
+      "id": "rayburn",
+      "name": "Rayburn House Office Building",
+      "lat": 38.88669,
+      "lon": -77.01061,
+      "x": 7017.829550859159,
+      "y": 1614.4805435348705,
+      "short_name": "Rayburn House Office Building",
+      "view_width": 1024
+    },
+    {
+      "id": "cannon",
+      "name": "Cannon House Office Building",
+      "lat": 38.88676,
+      "lon": -77.00531,
+      "x": 7817.033926235996,
+      "y": 1111.9765019179943,
+      "short_name": "Cannon House Office Building",
+      "view_width": 1024
+    },
+    {
+      "id": "longworth",
+      "name": "Longworth House Office Building",
+      "lat": 38.88655,
+      "lon": -77.00854,
+      "x": 7362.812401924445,
+      "y": 1432.8562404673114,
+      "short_name": "Longworth House Office Building",
+      "view_width": 1024
+    },
+    {
+      "id": "russell",
+      "name": "Russell Senate Office Building",
+      "lat": 38.89278,
+      "lon": -77.00642,
+      "x": 6465.523425572226,
+      "y": 538.3582610411625,
+      "short_name": "Russell Senate Office Building",
+      "view_width": 1024
+    },
+    {
+      "id": "dirksen",
+      "name": "Dirksen Senate Office Building",
+      "lat": 38.89278,
+      "lon": -77.00511,
+      "x": 6666.435691894591,
+      "y": 405.54109987275615,
+      "short_name": "Dirksen Senate Office Building",
+      "view_width": 1024
+    },
+    {
+      "id": "hart",
+      "name": "Hart Senate Office Building",
+      "lat": 38.89278,
+      "lon": -77.00408,
+      "x": 6824.40285402258,
+      "y": 314.50993487570054,
+      "short_name": "Hart Senate Office Building",
+      "view_width": 1024
+    },
+    {
+      "id": "american-indian",
+      "name": "National Museum of the American Indian",
+      "lat": 38.88822,
+      "lon": -77.01698,
+      "x": 5740.520136537169,
+      "y": 2018.9868035623876,
+      "short_name": "National Museum of the American Indian",
+      "view_width": 1024
+    }
+  ],
+  "film": {
+    "view_width_pixels": 1920,
+    "zoom_fraction": 0,
+    "route": [
+      "white-house",
+      "washington-monument",
+      "smithsonian-castle",
+      "natural-history",
+      "national-gallery",
+      "capitol",
+      "library",
+      "supreme-court"
+    ]
+  },
+  "opening_landmark": "capitol"
+}

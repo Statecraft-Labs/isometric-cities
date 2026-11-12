@@ -1,0 +1,35 @@
+{
+  "name": "Pixel Art Redmond, local Klein 9B pilot",
+  "status": "Selected for separate city-map studies after native pixel/style comparisons; geographic details remain illustrative",
+  "base": {
+    "repo": "mflux-community/flux2-klein-9b-mflux-q4",
+    "revision": "fcbc7528d6b4193cca919390a2a8b5b59e601f65",
+    "model_type": "flux2-klein-9b",
+    "architecture": "FLUX.2 Klein 9B distilled, q4",
+    "licence": "FLUX Non-Commercial"
+  },
+  "adapter": {
+    "repo": "artificialguybr/PIXELART-REDMOND-FLUXKLEIN9B",
+    "revision": "6da3f88529e4be570f445de0a2814cc30c502f9f",
+    "filename": "[FLUX.2.Klein]PixelArt_Redmond.safetensors",
+    "sha256": "f7e4fdead5391dea3df8bb03a75b8607c13902bf0b3655bd738a63cf7d7803cb",
+    "trigger": "Pixel Art, PixArFK.",
+    "licence": "Apache-2.0"
+  },
+  "inference": {
+    "queue_route": "klein9b",
+    "steps": 4,
+    "guidance": 1.0,
+    "seed": 4601,
+    "adapter_scale": 0.7,
+    "scales_tested": [
+      1.0,
+      0.7
+    ],
+    "max_native_reference_area": 1048576,
+    "window": 1024
+  },
+  "note": "Native 1024-square edits, composed through neighbour-aware context infill for larger maps. No silent reference shrinking, cloud teacher or local training.",
+  "materials_rule": "The caption names only dominant materials supported by this city source. Rare materials are supplied by source pixels, not global prompt nouns.",
+  "large_canvas_route": "Neighbour-aware context infill with 1024 native windows and a 128 px overlap feather. This is not shared-latent denoising."
+}

@@ -1,0 +1,222 @@
+{
+  "id": "edinburgh-v3",
+  "title": "Edinburgh",
+  "aliases": [
+    "edi",
+    "Edinburgh",
+    "Edinburgh Old Town",
+    "Edinburgh city centre",
+    "Edinburgh Scotland"
+  ],
+  "origin": {
+    "lat": 55.951,
+    "lon": -3.1885000000000003
+  },
+  "bbox": [
+    55.92673,
+    -3.2286,
+    55.97047,
+    -3.15049
+  ],
+  "patch_bbox": [
+    55.9418,
+    -3.1918,
+    55.9482,
+    -3.1855
+  ],
+  "landmarks": [
+    {
+      "id": "old-college",
+      "name": "Old College",
+      "lat": 55.94742445,
+      "lon": -3.18651473,
+      "osm_id": "relation/33710"
+    },
+    {
+      "id": "bristo-square",
+      "name": "Bristo Square",
+      "lat": 55.94560885,
+      "lon": -3.18887818,
+      "osm_id": "relation/7581275"
+    },
+    {
+      "id": "mcewan-hall",
+      "name": "McEwan Hall",
+      "lat": 55.9453181,
+      "lon": -3.18949203,
+      "osm_id": "way/5320938"
+    },
+    {
+      "id": "teviot-row-house",
+      "name": "Teviot Row House",
+      "lat": 55.9449006,
+      "lon": -3.18866849,
+      "osm_id": "way/5326815"
+    },
+    {
+      "id": "potterrow",
+      "name": "Potterrow Student Centre",
+      "lat": 55.94609765,
+      "lon": -3.1880301,
+      "osm_id": "way/5320937"
+    },
+    {
+      "id": "george-square",
+      "name": "George Square Gardens",
+      "lat": 55.94364345,
+      "lon": -3.18881375,
+      "osm_id": "way/4075023"
+    },
+    {
+      "id": "main-library",
+      "name": "Main Library",
+      "lat": 55.94266805,
+      "lon": -3.1889932,
+      "osm_id": "way/4308724"
+    },
+    {
+      "id": "the-meadows",
+      "name": "The Meadows",
+      "lat": 55.9423415,
+      "lon": -3.19429333,
+      "osm_id": "way/233760765"
+    },
+    {
+      "id": "edinburgh-castle",
+      "name": "Edinburgh Castle",
+      "lat": 55.9487,
+      "lon": -3.1999
+    },
+    {
+      "id": "princes-street-gardens",
+      "name": "Princes Street Gardens",
+      "lat": 55.9504,
+      "lon": -3.202
+    },
+    {
+      "id": "scott-monument",
+      "name": "Scott Monument",
+      "lat": 55.9524,
+      "lon": -3.1933
+    },
+    {
+      "id": "waverley",
+      "name": "Waverley Station",
+      "lat": 55.952,
+      "lon": -3.189
+    },
+    {
+      "id": "st-giles",
+      "name": "St Giles' Cathedral",
+      "lat": 55.9494,
+      "lon": -3.1909
+    },
+    {
+      "id": "royal-mile",
+      "name": "Royal Mile",
+      "lat": 55.9501,
+      "lon": -3.1859
+    },
+    {
+      "id": "holyrood",
+      "name": "Palace of Holyroodhouse",
+      "lat": 55.9527,
+      "lon": -3.1723
+    },
+    {
+      "id": "calton-hill",
+      "name": "Calton Hill",
+      "lat": 55.955,
+      "lon": -3.182
+    },
+    {
+      "id": "grassmarket",
+      "name": "Grassmarket",
+      "lat": 55.9474,
+      "lon": -3.1957
+    }
+  ],
+  "surface": {
+    "description": "Scottish Phase 5 LiDAR 0.5 m DSM/DTM (OGL v3) rendered as one z-buffered mesh; OSM (ODbL) for footprints, tags and ground classes",
+    "crs": "EPSG:27700",
+    "resolution_m": 0.5,
+    "bounds_projected_m": [
+      324600.0,
+      672700.0,
+      326500.0,
+      674600.0
+    ],
+    "rasters": [
+      {
+        "product": "dsm",
+        "tile": "NT27SE",
+        "url": "https://srsp-open-data.s3.eu-west-2.amazonaws.com/lidar/phase-5/dsm/27700/gridded/NT27SE_50CM_DSM_PHASE5.tif"
+      },
+      {
+        "product": "dsm",
+        "tile": "NT27SW",
+        "url": "https://srsp-open-data.s3.eu-west-2.amazonaws.com/lidar/phase-5/dsm/27700/gridded/NT27SW_50CM_DSM_PHASE5.tif"
+      },
+      {
+        "product": "dtm",
+        "tile": "NT27SE",
+        "url": "https://srsp-open-data.s3.eu-west-2.amazonaws.com/lidar/phase-5/dtm/27700/gridded/NT27SE_50CM_DTM_PHASE5.tif"
+      },
+      {
+        "product": "dtm",
+        "tile": "NT27SW",
+        "url": "https://srsp-open-data.s3.eu-west-2.amazonaws.com/lidar/phase-5/dtm/27700/gridded/NT27SW_50CM_DTM_PHASE5.tif"
+      }
+    ],
+    "horizontal_grid": {
+      "filename": "uk_os_OSTN15_NTv2_OSGBtoETRS.tif",
+      "url": "https://cdn.proj.org/uk_os_OSTN15_NTv2_OSGBtoETRS.tif",
+      "sha256": "5d6ed64d2119952c4c559fa1fccbc594b6520fc3ec3ef2fc10be13202c4384fa"
+    },
+    "geographic_pipeline": "proj=pipeline step proj=unitconvert xy_in=deg xy_out=rad step inv proj=hgridshift grids={grid} step proj=tmerc lat_0=49 lon_0=-2 k=0.9996012717 x_0=400000 y_0=-100000 ellps=airy",
+    "osm_snapshot": "2026-08-10T00:10:23Z",
+    "osm_bbox": [
+      55.936,
+      -3.215,
+      55.963,
+      -3.175
+    ],
+    "camera": {
+      "centre_projected_m": [
+        325600.0,
+        673550.0
+      ],
+      "u_range_m": [
+        -546.6666666666666,
+        605.3333333333334
+      ],
+      "y_range_screen_m": [
+        -307.6666666666667,
+        293.33333333333337
+      ],
+      "z0_m": 60.0,
+      "bearing_deg": 45.0,
+      "elevation_deg": 30.0,
+      "pixels_per_metre": 3.0
+    },
+    "variant": "edges",
+    "colour_evidence": "roof/wall from OSM roof:*/building:* tags when present; else LiDAR slope (<10 deg flat) and OSM start_date>=1950/plaster/concrete for modern; default grey slate + grey-buff sandstone sampled from 2016 Andrew Shiva aerial (CC BY-SA 4.0). No random per-building colour.",
+    "attribution": [
+      "Contains Scottish Government and Fugro LiDAR Phase 5 data, Crown copyright 2020-2021, OGL v3",
+      "(c) OpenStreetMap contributors, ODbL"
+    ],
+    "reference_source_sha256": "9de6dfd53ba81dbc8de4e7f37f5ecc4fcbe111a99261d22989627b8bae650c42",
+    "reference_inputs_sha256": {
+      "surface": "7089231495798905b9caf9d1103d524941aef445f20eb1383fa4d166e3ff394e",
+      "osm": "6c19fe5adcc95ca01354c8d0071470be30505960f1fdc76ca314ac62cbee592a"
+    },
+    "limits": [
+      "DSM has no RGB imagery. Roof colours follow OSM tags or documented material defaults; no random variation.",
+      "Facades are plain shaded surfaces. The image model invents their fine windows.",
+      "The 30-degree game camera is 2:1 dimetric, not equal-axis isometric.",
+      "Only the preserved reference OSM cache establishes byte-identical replay; a new dated Overpass export can change element order or coverage."
+    ],
+    "landmarks": "cities/landmarks/edinburgh.json"
+  },
+  "caption_file": "examples/edinburgh-caption.txt"
+}

@@ -1,0 +1,11 @@
+{
+  "size": [1080, 1350], "fps": 60, "loop": true, "pixel_zoom": 2,
+  "shots": [
+    {"seconds": 2.6, "path": [{"at": "edinburgh-castle", "offset": [-105, -22], "width": 864}], "wipe": [0.5, 1.02]},
+    {"seconds": 7.0, "path": [{"at": "edinburgh-castle", "offset": [-105, -22], "width": 864}, {"at": "the-hub", "width": 1300}, {"at": "st-giles'-cathedral", "offset": [-8, -48], "width": 540}]},
+    {"seconds": 7.0, "ease": "in", "path": [{"at": "scott-monument", "offset": [0, -52], "width": 540}, {"at": "edinburgh-waverley", "offset": [-250, 390]}]},
+    {"seconds": 4.6, "ease": "linear", "path": [{"at": "old-college", "offset": [0, 10], "width": 720}, {"at": "mcewan-hall", "offset": [-100, -30], "width": 864}]},
+    {"seconds": 7.6, "path": [{"at": "greyfriars-kirk", "offset": [60, 0]}, {"at": "grassmarket", "offset": [-100, -200], "width": 1300}, {"at": "edinburgh-castle", "offset": [-105, -22], "width": 864}]},
+    {"seconds": 1.8, "path": [{"at": "edinburgh-castle", "offset": [-105, -22], "width": 864}], "wipe": [1.02, 0.5]}
+  ]
+}

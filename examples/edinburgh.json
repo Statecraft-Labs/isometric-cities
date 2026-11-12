@@ -1,0 +1,327 @@
+{
+  "title": "Edinburgh",
+  "city_id": "edinburgh",
+  "width": 3456,
+  "height": 1803,
+  "status": "Source-grounded illustrative pixel-art map",
+  "source_sha256": "9de6dfd53ba81dbc8de4e7f37f5ecc4fcbe111a99261d22989627b8bae650c42",
+  "image_sha256": "8783392a183598c812c406b79200fea21104ab181bf8a323e2cd4e9bf53d5bd9",
+  "camera": {
+    "type": "orthographic surface",
+    "crs": "EPSG:27700",
+    "bearing_deg": 45.0,
+    "elevation_deg": 30.0,
+    "px_per_m": 3.0,
+    "width": 3456,
+    "height": 1803,
+    "pixel_matrix": [
+      [
+        2.121320343559643,
+        -2.1213203435596424,
+        0,
+        739753.4135415773
+      ],
+      [
+        -1.060660171779821,
+        -1.0606601717798212,
+        -2.598076211353316,
+        1060837.4952064895
+      ]
+    ],
+    "pixel_matrix_coordinates": [
+      "projected_easting_m",
+      "projected_northing_m",
+      "elevation_m"
+    ],
+    "centre_projected_m": [
+      325600.0,
+      673550.0
+    ],
+    "u_range_m": [
+      -546.6666666666666,
+      605.3333333333334
+    ],
+    "y_range_screen_m": [
+      -307.6666666666667,
+      293.33333333333337
+    ],
+    "z0_m": 60.0,
+    "formula": "u=dE*cos(b)-dN*sin(b), v=dE*sin(b)+dN*cos(b); X=(u-u0)*s; Y=(-(sin(e)*v+cos(e)*(z-z0))-y0)*s"
+  },
+  "method": {
+    "description": "Local Klein 9B q4 + Pixel Art Redmond; sequential neighbour-conditioned edits, not shared-latent denoising.",
+    "preset": "model-presets/pixelart-redmond-klein9b.json",
+    "caption_sha256": "8ffed8ccea956cf55f953eb36a1098220793fd5ef911ac5134c7df7a68fc9c0b",
+    "window": 1024,
+    "windows": 10,
+    "maximum_stride": 800,
+    "feather_pixels": 128,
+    "raw_sha256": "7209c41de7f22df16be3e0364665e4d943cd24fda0789e79ab401b434d217fa4",
+    "steps": 4,
+    "guidance": 1,
+    "adapter_scale": 0.7,
+    "seed_start": 4601,
+    "finishing": {
+      "recipe": "examples/edinburgh-finish.json",
+      "recipe_sha256": "7f23ac498dfaa9ef56672bd88c2b01932ca807f242c133af1d7f1bc33f5717fe",
+      "changes": [
+        {
+          "name": "local material outline tones",
+          "pixels": 247321
+        },
+        {
+          "name": "great-hall-roof",
+          "pixels": 1022
+        },
+        {
+          "name": "scott-stone",
+          "pixels": 3655
+        },
+        {
+          "name": "Source-calibrated Scott Monument",
+          "pixels": 7093,
+          "image_sha256": "405a02ef170a34d333811bfb872d99a07c50a5cae89f74c1894d5d2d47d15f73",
+          "position": [
+            824,
+            386
+          ]
+        },
+        {
+          "name": "St Giles crown finial",
+          "pixels": 38,
+          "image_sha256": "2d8cf958195d232038b0a5eacf91c79d7f37014b94ae7d80a86937646abd648f",
+          "position": [
+            1840,
+            554
+          ]
+        }
+      ],
+      "reviewed_native_repairs": true,
+      "scott_correction": "Mapped footprint and measured base/apex preserved; source-calibrated local Gothic art asset with open gaps beside the four outer turrets; illustrative tracery and statue.",
+      "no_global_map_resampling": true,
+      "st_giles_correction": "Registered source finial height restored above the crown; no weathercock detail."
+    },
+    "base_paint_source_sha256": "7ead4d185e44baf1c1b4f6f531b94cdb9f941b00a13352627f4bab48bf721e0c"
+  },
+  "limitations": [
+    "LiDAR supplies geometry without RGB; tagged materials and documented defaults do not recover every true roof colour.",
+    "Landmark mesh profiles, windows and small ornament are illustrative. The St Giles crown interior reads closed at small sizes; its finial has no weathercock.",
+    "Traditional 30\u00b0 dimetric game view; sequential context infill, not shared-latent denoising. Holyrood is outside this frame."
+  ],
+  "credits": "Contains Scottish Government and Fugro LiDAR Phase 5 data, Crown copyright 2020\u20132021, OGL v3. \u00a9 OpenStreetMap contributors, ODbL. Palette evidence: Andrew Shiva / Wikipedia, Scotland-2016-Aerial-Edinburgh Castle, CC BY-SA 4.0. No aerial photograph pixels are used in this source.",
+  "media_attribution": "Contains Scottish Government and Fugro LiDAR Phase 5 data, Crown copyright 2020\u20132021, OGL v3. \u00a9 OpenStreetMap contributors, ODbL. Palette evidence: Andrew Shiva / Wikipedia, Scotland-2016-Aerial-Edinburgh Castle, CC BY-SA 4.0. No aerial photograph pixels are used in this source.",
+  "licence": "Code MIT. Model: FLUX Non-Commercial; adapter: Apache-2.0. Source attribution and source licences retained. Edinburgh imagery distributed under CC BY-SA 4.0; DC source-derived imagery under CC BY 4.0.",
+  "regions": [],
+  "navigation": [
+    {
+      "id": "dc",
+      "name": "DC",
+      "href": "../dc/viewer.html"
+    },
+    {
+      "id": "edinburgh",
+      "name": "Edinburgh",
+      "href": "../edinburgh/viewer.html"
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "edinburgh-castle",
+      "name": "Edinburgh Castle",
+      "x": 905,
+      "y": 1285,
+      "osm": "way/4301292",
+      "short_name": "Castle",
+      "view_width": 1024,
+      "look_up": 13.938
+    },
+    {
+      "id": "st-giles'-cathedral",
+      "name": "St Giles' Cathedral",
+      "x": 1868,
+      "y": 688,
+      "osm": "way/42407060",
+      "short_name": "St Giles",
+      "view_width": 1024
+    },
+    {
+      "id": "scott-monument",
+      "name": "Scott Monument",
+      "x": 862,
+      "y": 542,
+      "osm": "way/39044819",
+      "short_name": "Scott Monument",
+      "view_width": 1024,
+      "look_up": 69.872,
+      "zoom": 1
+    },
+    {
+      "id": "old-college",
+      "name": "Old College",
+      "x": 2819,
+      "y": 710,
+      "osm": "relation/33710",
+      "short_name": "Old College",
+      "view_width": 1024
+    },
+    {
+      "id": "national-museum-of-scotland",
+      "name": "National Museum of Scotland",
+      "x": 2609,
+      "y": 926,
+      "osm": "way/467226683",
+      "short_name": "Museum",
+      "view_width": 1024
+    },
+    {
+      "id": "edinburgh-waverley",
+      "name": "Edinburgh Waverley",
+      "x": 1476,
+      "y": 291,
+      "osm": "way/5208866",
+      "short_name": "Waverley",
+      "view_width": 1024
+    },
+    {
+      "id": "greyfriars-kirk",
+      "name": "Greyfriars Kirk",
+      "x": 2323,
+      "y": 1123,
+      "osm": "way/287130390",
+      "short_name": "Greyfriars",
+      "view_width": 1024
+    },
+    {
+      "id": "grassmarket",
+      "name": "Grassmarket",
+      "x": 1667,
+      "y": 1310,
+      "osm": "way/2956313",
+      "short_name": "Grassmarket",
+      "view_width": 1024
+    },
+    {
+      "id": "mcewan-hall",
+      "name": "McEwan Hall",
+      "x": 3015,
+      "y": 1088,
+      "osm": "relation/15748434",
+      "short_name": "McEwan Hall",
+      "view_width": 1024
+    },
+    {
+      "id": "ramsay-garden",
+      "name": "Ramsay Garden",
+      "x": 1165,
+      "y": 1032,
+      "osm": "way/4065309",
+      "short_name": "Ramsay Garden",
+      "view_width": 1024
+    },
+    {
+      "id": "princes-street",
+      "name": "Princes Street",
+      "x": 932,
+      "y": 396,
+      "osm": "way/2956325",
+      "short_name": "Princes Street",
+      "view_width": 1024
+    },
+    {
+      "id": "royal-scottish-academy",
+      "name": "Royal Scottish Academy",
+      "x": 614,
+      "y": 829,
+      "osm": "way/5182745",
+      "short_name": "Royal Scottish Academy",
+      "view_width": 1024
+    },
+    {
+      "id": "teviot-row-house",
+      "name": "Teviot Row House",
+      "x": 3210,
+      "y": 1085,
+      "osm": "way/5326815",
+      "short_name": "Teviot Row House",
+      "view_width": 1024
+    },
+    {
+      "id": "bank-of-scotland",
+      "name": "Bank of Scotland",
+      "x": 1393,
+      "y": 746,
+      "osm": "way/26564169",
+      "short_name": "Bank of Scotland",
+      "view_width": 1024
+    },
+    {
+      "id": "central-library",
+      "name": "Central Library",
+      "x": 1905,
+      "y": 961,
+      "osm": "way/42121790",
+      "short_name": "Central Library",
+      "view_width": 1024
+    },
+    {
+      "id": "the-hub",
+      "name": "The Hub",
+      "x": 1446,
+      "y": 1013,
+      "osm": "way/42997989",
+      "short_name": "The Hub",
+      "view_width": 1024
+    },
+    {
+      "id": "ross-fountain",
+      "name": "Ross Fountain",
+      "x": 77,
+      "y": 1500,
+      "osm": "way/62066717",
+      "short_name": "Ross Fountain",
+      "view_width": 1024
+    },
+    {
+      "id": "victoria-street",
+      "name": "Victoria Street",
+      "x": 1785,
+      "y": 909,
+      "osm": "way/231668414",
+      "short_name": "Victoria Street",
+      "view_width": 1024
+    },
+    {
+      "id": "signet-library",
+      "name": "Signet Library",
+      "x": 1836,
+      "y": 785,
+      "osm": "relation/9376441",
+      "short_name": "Signet Library",
+      "view_width": 1024
+    },
+    {
+      "id": "balmoral-hotel",
+      "name": "Balmoral Hotel",
+      "x": 1277,
+      "y": 235,
+      "osm": "relation/14213049",
+      "short_name": "Balmoral Hotel",
+      "view_width": 1024
+    }
+  ],
+  "film": {
+    "view_width_pixels": 1920,
+    "zoom_fraction": 0,
+    "route": [
+      "edinburgh-castle",
+      "grassmarket",
+      "st-giles'-cathedral",
+      "old-college",
+      "mcewan-hall",
+      "national-museum-of-scotland",
+      "edinburgh-waverley",
+      "scott-monument"
+    ]
+  },
+  "opening_landmark": "edinburgh-castle"
+}
