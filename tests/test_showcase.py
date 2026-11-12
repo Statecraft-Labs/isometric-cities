@@ -2,8 +2,8 @@
 import json
 import io
 from contextlib import redirect_stdout
+from html.parser import HTMLParser
 from pathlib import Path
-import re
 import subprocess
 import sys
 import tempfile
@@ -153,7 +153,20 @@ class Showcase(unittest.TestCase):
     def test_browser_interaction_math_and_motion_preferences(self):
         metadata=dict(self.metadata,width=2048,height=656,city_id='dc',navigation=[{'id':'dc','name':'DC','href':'../dc/viewer.html'},{'id':'edinburgh','name':'Edinburgh','href':'../edinburgh/viewer.html'}])
         page=showcase.HTML.replace('__ART__','"art"').replace('__SOURCE__','"source"').replace('__DATA__',showcase.script_json(metadata))
-        script=re.search(r'<script>(.*?)</script>',page,re.S).group(1)
+        class Scripts(HTMLParser):
+            inside = False
+            def handle_starttag(self, tag, attrs):
+                if tag == 'script':
+                    self.inside = True
+            def handle_endtag(self, tag):
+                if tag == 'script':
+                    self.inside = False
+            def handle_data(self, data):
+                if self.inside:
+                    scripts.append(data)
+        scripts = []
+        Scripts().feed(page)
+        script = ''.join(scripts)
         harness=r'''const vm=require('node:vm'),assert=require('node:assert/strict');
 class Element{
  constructor(){this.style={setProperty(k,v){this[k]=v}};this.children=[];this.events={};this.dataset={};this.attrs={};this.hidden=true;this.clientWidth=728;this.clientHeight=410;this.classList={add(){},remove(){}}}
