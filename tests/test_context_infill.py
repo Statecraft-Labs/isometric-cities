@@ -121,6 +121,32 @@ class ContextInfill(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'schedule differs'):
             infill.paint(self.source, self.folder / 'bad-schedule', self.caption, adopt=experiment)
 
+    def test_keep_mask_protects_source_pixels_and_skips_fully_kept_windows(self):
+        # Open water must stay the source: an all-white window gets no job, a mixed one is restored where white.
+        mask = np.zeros((1024, 1536), np.uint8)
+        mask[:, :1024] = 255
+        keep = self.folder / 'keep.png'
+        Image.fromarray(mask).save(keep)
+        jobs = []
+        def painted(receipt, path, **kwargs):
+            jobs.append(path.parent.name)
+            raw = path.parent / 'raw.png'
+            Image.new('RGB', (1024, 1024), 'white').save(raw)
+            receipt.update(state='art-ready', art=[{'path': str(raw), 'sha256': style.digest(raw)}])
+        out = self.folder / 'kept'
+        with patch.object(style, 'style_plan', return_value={'backend': 'test'}), patch.object(style, 'queue_style', side_effect=painted):
+            result = infill.paint(self.source, out, self.caption, keep=keep)
+        self.assertEqual(jobs, ['w01-x512-y0'])
+        art = np.array(Image.open(result['image']))
+        np.testing.assert_array_equal(art[:, :1024], self.source_pixels[:, :1024])
+        np.testing.assert_array_equal(art[:, 1024:], 255)
+        self.assertIn('keep_sha256', json.loads((out / 'plan.json').read_text())['identity'])
+        with self.assertRaisesRegex(ValueError, 'changed'):
+            infill.paint(self.source, out, self.caption, plan_only=True)
+        Image.fromarray(mask[:, :1000]).save(keep)
+        with self.assertRaisesRegex(ValueError, 'source dimensions'):
+            infill.paint(self.source, self.folder / 'wrong-size', self.caption, keep=keep, plan_only=True)
+
     def test_interrupted_ambiguous_submission_is_never_requeued(self):
         out = self.folder / 'resume'
         # Simulate interruption after durable intent but before a queue ID was captured.

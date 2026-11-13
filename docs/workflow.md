@@ -60,6 +60,8 @@ python3 atlas.py paint --source examples/dc-source.png \
 
 Substitute `edinburgh` for the other example. `--plan-only` reports the window count without resolving models or submitting work. Native 1024-square windows have at most an 800 px stride. Each next input includes finished neighbours, and a 128 px distance feather composes overlaps. This is sequential context infill, not shared-latent denoising. Cut display tiles only after the complete raster passes visual review.
 
+Where a window holds nothing to redraw, the model invents: a window of open sea came back as an island of buildings. `--keep MASK.png` takes an 8-bit greyscale mask at the source size. White pixels keep the source and are never redrawn, and an all-white window gets no job. Draw the kept area into the source first, for example as flat water tones.
+
 Every window keeps its input, raw prediction, settings and durable job receipt. Resume binds the source, prompt, preset, composition code and backend. A failed/ambiguous job is never replaced automatically. After reading its log, move that one folder out of `windows/` and repeat `paint`: finished windows are verified and reused, and only the missing one is submitted. `--adopt DIRECTORY` can replay original experimental windows, validating their exact neighbour context and pinned commands before composition.
 
 The bundled recipes bind the original raw prediction hashes. Those raw paints are too large to bundle, so the `finish` command below reproduces the examples only from them. Re-inference can differ across Metal/runtime versions. If the fresh raw hash differs, review it and make a new finishing recipe. Do not disable a hash guard to reuse old masks.

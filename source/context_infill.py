@@ -50,6 +50,14 @@ def pixels(path, size=None):
         return np.array(image)
 
 
+def keep_mask(path, size):
+    """White keeps the source pixel, black lets the model redraw it."""
+    with Image.open(path) as image:
+        if image.mode != 'L' or image.size != tuple(size):
+            raise ValueError('Keep mask must be an 8-bit greyscale image at the source dimensions')
+        return np.asarray(image, np.float32)[..., None] / 255
+
+
 def prompt_for(caption, preset):
     if not caption.strip() or len(caption) > 4000:
         raise ValueError('Caption must contain 1..4000 characters')
@@ -119,7 +127,7 @@ def adopt_window(folder, wd, expected_pixels, identity, index):
     return result
 
 
-def paint(source, out, caption, *, preset_path=None, adopt=None, plan_only=False, backend='auto'):
+def paint(source, out, caption, *, preset_path=None, adopt=None, plan_only=False, backend='auto', keep=None):
     source, out = Path(source).resolve(), Path(out).resolve()
     preset_path = Path(preset_path or style.DEFAULT_PRESET).resolve()
     preset = json.loads(preset_path.read_text())
@@ -138,6 +146,11 @@ def paint(source, out, caption, *, preset_path=None, adopt=None, plan_only=False
                 'preset': preset, 'prompt': prompt_for(caption, preset), 'backend': backend,
                 'windows': grid, 'window': WINDOW, 'feather': FEATHER,
                 'method': 'sequential neighbour-conditioned edits; not shared-latent denoising'}
+    if keep and adopt:
+        raise ValueError('A keep mask cannot be combined with adopted windows')
+    keep_alpha = keep_mask(keep, [width, height]) if keep else None
+    if keep:
+        identity['keep_sha256'] = style.digest(keep)
     adoption = Path(adopt).resolve() if adopt else None
     experimental = adoption_plan(adoption, identity) if adoption else None
     with ownership(out):
@@ -160,8 +173,11 @@ def paint(source, out, caption, *, preset_path=None, adopt=None, plan_only=False
                 raise ValueError('Window source or finished-neighbour pixels changed; resume refused')
             if not input_path.exists():
                 Image.fromarray(expected).save(input_path)
+            kept = None if keep_alpha is None else keep_alpha[y:y + WINDOW, x:x + WINDOW]
             adopted_path = wd / 'adopted.json'
-            if adopted_path.exists():
+            if kept is not None and kept.min() >= 1:
+                result = None  # nothing here may be redrawn, so no job
+            elif adopted_path.exists():
                 result = json.loads(adopted_path.read_text())
                 if result['input_sha256'] != style.digest(input_path):
                     raise ValueError('Imported window input changed; resume refused')
@@ -194,9 +210,14 @@ def paint(source, out, caption, *, preset_path=None, adopt=None, plan_only=False
                 if len(receipt['art']) != 1:
                     raise ValueError('One prediction per window is required')
                 result = receipt['art'][0]
-            if style.digest(result['path']) != result['sha256']:
-                raise ValueError('Raw prediction changed; resume refused')
-            raw = pixels(result['path'], [WINDOW, WINDOW])
+            if result is None:
+                raw = original[y:y + WINDOW, x:x + WINDOW]
+            else:
+                if style.digest(result['path']) != result['sha256']:
+                    raise ValueError('Raw prediction changed; resume refused')
+                raw = pixels(result['path'], [WINDOW, WINDOW])
+                if kept is not None:
+                    raw = np.clip(original[y:y + WINDOW, x:x + WINDOW] * kept + raw * (1 - kept) + .5, 0, 255).astype(np.uint8)
             composite(canvas, done, raw, x, y)
             Image.fromarray(canvas).save(out / 'map-progress.png')
             print(f'{index + 1}/{len(grid)} windows verified', flush=True)
@@ -219,12 +240,13 @@ def main(argv=None):
     parser.add_argument('--caption-file', type=Path, required=True)
     parser.add_argument('--preset', type=Path, default=style.DEFAULT_PRESET)
     parser.add_argument('--adopt', type=Path, help='Replay existing hash-bound experimental windows without inference')
+    parser.add_argument('--keep', type=Path, help='8-bit mask at source size; white pixels keep the source and are never redrawn')
     parser.add_argument('--plan-only', action='store_true')
     parser.add_argument('--backend', choices=['auto', 'imagine', 'mflux'], default='auto')
     args = parser.parse_args(argv)
     try:
         result = paint(args.source, args.out, args.caption_file.read_text().strip(), preset_path=args.preset,
-                       adopt=args.adopt, plan_only=args.plan_only, backend=args.backend)
+                       adopt=args.adopt, plan_only=args.plan_only, backend=args.backend, keep=args.keep)
         print(json.dumps(result, indent=2))
         return 0
     except (ValueError, OSError, KeyError, IndexError) as error:
