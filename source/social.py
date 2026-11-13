@@ -145,7 +145,9 @@ def export(args):
     output = args.output or ROOT/'outputs/media'/f"{manifest.get('city_id', 'city')}-social.mp4"
     if output.exists() and not args.overwrite:
         raise FileExistsError(f'Output exists; choose a fresh path or use --overwrite: {output}')
-    if digest(image) != manifest['image_sha256'] or digest(source) != manifest['source_sha256']:
+    image_sha256 = digest(image)
+    # A freshly made place's manifest binds only its source; the art hash is checked where a manifest records one.
+    if manifest.get('image_sha256', image_sha256) != image_sha256 or digest(source) != manifest['source_sha256']:
         raise ValueError('Map or source pixels do not match the manifest hashes')
     art, original = (Image.open(path).convert('RGB') for path in (image, source))
     if not art.size == original.size == (manifest['width'], manifest['height']):
@@ -157,7 +159,7 @@ def export(args):
     output.with_suffix('.credits.txt').write_text(credit)
     output.with_suffix('.plan.json').write_text(json.dumps({
         'recipe': recipe, 'recipe_path': str(recipe_path) if recipe_path.exists() else 'default from manifest landmarks',
-        'image_sha256': manifest['image_sha256'], 'source_sha256': manifest['source_sha256'], 'verification': proof}, indent=2) + '\n')
+        'image_sha256': image_sha256, 'source_sha256': manifest['source_sha256'], 'verification': proof}, indent=2) + '\n')
     render(art, original, *plan.frame(0)).save(output.with_suffix('.poster.png'))
     picks = sorted({shot['first'] + offset for shot in plan.shots for offset in (0, shot['frames'] // 2, shot['frames'] - 1)})
     sheet = Image.new('RGB', (360 * min(6, len(picks)), 450 * math.ceil(len(picks) / 6)))

@@ -33,7 +33,7 @@ The 3456×1803 source uses Scottish 0.5 m DSM/DTM at 3 px/m, looking northeast f
 
 The renderer range-reads configured public COG rasters, captures dated OSM geometry and downloads a SHA-pinned OSTN15 horizontal transformation grid. Preserve `outputs/cache/surface/edinburgh-v3/` for exact source replay. A fresh provider response creates newly recorded inputs; it need not match the delivered snapshot.
 
-Measured roofs, chimneys, spires, terrain and tree canopy form one z-buffered surface. LiDAR contains no RGB. Tagged roof/wall materials take priority; untagged surfaces use slope and documented palette defaults. This does not reconstruct each roof's true colour. The palette is source-informed, not randomly varied. Another city can supply `surface.palette`.
+Measured roofs, chimneys, spires, terrain and tree canopy form one z-buffered surface. LiDAR contains no RGB. Tagged roof/wall materials take priority; untagged surfaces use slope and documented palette defaults. This does not reconstruct each roof's true colour. A 3×3 median smooths roof noise and can also shorten narrow features: on 0.5 m AHN it lowered the apex cell of Amsterdam's Nieuwe Kerk spire from 58.1 m to 49.4 m. Check a narrow landmark against the raw DSM. The palette is source-informed, not randomly varied. Another city can supply `surface.palette`.
 
 Existing inputs can be supplied with `--surface PATH.npz --osm PATH.json --grid PATH.tif --offline`. NPZ contains finite `dsm`, `dtm` arrays of identical shape and `[west,south,east,north]` bounds, rows north to south. The recipe declares projected CRS and resolution. OSM must be Overpass `out body geom` JSON. `source.json` records all hashes, camera matrix, palette and landmarks.
 

@@ -1,7 +1,11 @@
 """Feed films stay inside the map, share one viewport across the wipe, loop and carry no text."""
+import argparse
+import contextlib
+import io
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 from PIL import Image, ImageChops
@@ -70,6 +74,25 @@ class SocialTests(unittest.TestCase):
         self.assertIsNone(ImageChops.difference(split, still).crop((0, 0, 76, 200)).getbbox())
         zoomed = social.sample(art, social.Viewport(420, 300, 80, 100, 160, 200))
         self.assertEqual(zoomed.tobytes(), art.crop((420, 300, 500, 400)).resize((160, 200), Image.Resampling.NEAREST).tobytes())
+
+    def test_a_freshly_made_place_plans_from_its_source_manifest(self):
+        """`make` binds only the source hash. The art hash is checked where a manifest records one."""
+        with tempfile.TemporaryDirectory() as folder:
+            folder = Path(folder)
+            Image.new('RGB', (1200, 900), (90, 120, 90)).save(folder/'art.png')
+            Image.new('RGB', (1200, 900), (120, 120, 120)).save(folder/'source.png')
+            data = {**manifest(), 'credits': 'Test credits', 'source_sha256': social.digest(folder/'source.png')}
+            (folder/'source.json').write_text(json.dumps(data))
+            (folder/'shots.json').write_text(json.dumps(recipe()))
+            args = argparse.Namespace(manifest=folder/'source.json', image=folder/'art.png', source=folder/'source.png',
+                                      recipe=folder/'shots.json', output=folder/'film.mp4', plan_only=True, overwrite=False)
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(social.export(args)['result'], 'pass')
+            plan = json.loads((folder/'film.plan.json').read_text())
+            self.assertEqual(plan['image_sha256'], social.digest(folder/'art.png'))
+            (folder/'source.json').write_text(json.dumps({**data, 'image_sha256': '0' * 64}))
+            with self.assertRaisesRegex(ValueError, 'do not match the manifest hashes'):
+                social.export(args)
 
     def test_bundled_examples_plan_from_their_landmarks(self):
         for city in ('dc', 'edinburgh'):

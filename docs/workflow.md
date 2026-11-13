@@ -41,7 +41,7 @@ The supplied source is already registered. Acquiring a fresh Edinburgh surface c
 
 ## Try one treatment
 
-Repeat the pilot command with `--style --wait`. Use `--caption-file PATH` for visible materials and `--preset PATH` for another pinned model. The default is distilled Klein 9B q4 with Pixel Art Redmond at 0.7, four steps, CFG 1 and seed 4601. Name dominant materials only. Naming a rare material globally can spread it onto other roofs.
+Repeat the pilot command with `--style --wait`. Use `--caption-file PATH` for visible materials and `--preset PATH` for another pinned model. The default is distilled Klein 9B q4 with Pixel Art Redmond at 0.7, four steps, CFG 1 and seed 4601. Name dominant materials only. Naming a rare material globally can spread it onto other roofs. Keep landmark names out of the `paint` caption too: every window reads it, and in one Amsterdam run a palace's courtyards spread onto ordinary canal blocks.
 
 Styling runs in a fresh isolated MFlux worker using the downloaded pins. It runs offline, verifies native conditioning dimensions before inference, and serializes GPU workers. It never changes installed model code. There is no cloud fallback. It needs Metal GPU access. If `native-worker.log` reports `No Metal device available`, as it did inside one coding agent's command sandbox, move to a shell with GPU access. The failed job is kept and never relaunched, so give a pilot a fresh `--out`; for `paint`, use the failed-window recovery below.
 
@@ -83,6 +83,8 @@ python3 atlas.py showcase --image examples/dc.png \
 python3 atlas.py film --image examples/dc.png --manifest examples/dc.json \
   --output outputs/dc-flythrough.mp4 --seconds 60 --fps 60 --width 1920 --height 1080
 ```
+
+A `make` source's `capture/source.json` works as `--metadata` and `--manifest` as it is. A `surface` source records its landmarks by name instead, so give `showcase` a small file like `examples/dc.json`: `landmarks` as a list of `id`, `name`, `x`, `y` in native pixels, plus `credits`.
 
 The offline explorer loads only the visible tiles, with small previews for instant navigation. Drag to pan, pinch or scroll to zoom, and use the divider to compare source and art in the same viewport. The places menu jumps directly to named landmarks. Phone controls have 44-pixel tap targets; Scott Monument and the White House open at native scale. Number keys also hop to landmarks; any input stops the tour. The minimap supports click and drag. Credits remain in the viewer, and reduced motion disables automatic movement. Deep Zoom lower levels use box filtering; native tiles reconstruct the map exactly. Default `demo` selects an immutable edition under `outputs/demo/`, so updated examples open correctly while old exports survive. An explicit `--out` stays strict: use a fresh directory when inputs change.
 
