@@ -40,8 +40,9 @@ def doctor():
                 packages[name] = None
     checks = {'python_dependencies': all(packages.values()),
               **{name: bool(shutil.which(name)) for name in ('ffmpeg', 'ffprobe')}}
-    print(json.dumps({'checks': checks, 'packages': packages,
-                      'next': 'python3 atlas.py demo' if all(checks.values()) else './setup.sh'}, indent=2))
+    following = ('python3 atlas.py demo' if all(checks.values()) else './setup.sh' if not checks['python_dependencies']
+                 else 'Install FFmpeg for films and GIFs (brew install ffmpeg). The demo needs none: python3 atlas.py demo')
+    print(json.dumps({'checks': checks, 'packages': packages, 'next': following}, indent=2))
     return 0 if all(checks.values()) else 1
 
 

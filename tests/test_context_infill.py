@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
 
@@ -138,6 +139,31 @@ class ContextInfill(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'ambiguous'):
                 infill.paint(self.source, out, self.caption, backend='imagine')
         runner.assert_not_called()
+
+    def test_windows_prepared_before_models_run_once_setup_completes(self):
+        out, repo = self.folder / 'early', self.folder / 'repo'
+        with patch.object(style, 'imagine_path', return_value=None), patch.object(style, 'ROOT', repo), \
+                patch.object(style, 'model_paths', side_effect=ValueError('no weights')):
+            with self.assertRaisesRegex(ValueError, 'setup.sh --models'):
+                infill.paint(self.source, out, self.caption)
+        python = repo / 'outputs/image-runtime/bin/python'
+        python.parent.mkdir(parents=True)
+        python.touch()
+        def worker(argv, **kwargs):
+            path = Path(argv[-1])
+            receipt = json.loads(path.read_text())
+            self.assertIn('/base', receipt['style_plan']['native_argv'])
+            raw = path.parent / 'art/raw.png'
+            raw.parent.mkdir()
+            Image.new('RGB', (1024, 1024), 'white').save(raw)
+            style.write(path.parent / 'native-result.json', {'ok': True, 'job_id': receipt['job']['id'],
+                        'image': str(raw), 'sha256': style.digest(raw)})
+            return SimpleNamespace(pid=123)
+        with patch.object(style, 'imagine_path', return_value=None), patch.object(style, 'ROOT', repo), \
+                patch.object(style, 'model_paths', return_value=('/base', '/adapter')), \
+                patch.object(style.subprocess, 'Popen', side_effect=worker) as launch:
+            self.assertEqual(infill.paint(self.source, out, self.caption)['state'], 'art-ready')
+        self.assertEqual(launch.call_count, 2)
 
 
 if __name__ == '__main__':

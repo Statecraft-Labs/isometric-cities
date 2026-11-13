@@ -180,6 +180,10 @@ def paint(source, out, caption, *, preset_path=None, adopt=None, plan_only=False
                     receipt = json.loads(receipt_path.read_text())
                     if receipt['source']['sha256'] != prepared['sha256'] or not style.same_style_job(receipt['style_plan'], candidate):
                         raise ValueError('Window receipt identity changed; resume refused')
+                    if not receipt.get('job'):
+                        # Nothing was submitted, so readiness and model paths may have changed since.
+                        receipt['style_plan'] = candidate
+                        style.write(receipt_path, receipt)
                 else:
                     receipt = {'source': prepared, 'style_plan': candidate, 'state': 'prepared'}
                     style.write(receipt_path, receipt)

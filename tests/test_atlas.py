@@ -1,12 +1,17 @@
 """The bundled examples work without downloads and refuse damaged cached exports."""
+from contextlib import redirect_stdout
+import io
 import json
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+import atlas
 
 
 class AtlasWorkflow(unittest.TestCase):
@@ -40,6 +45,15 @@ class AtlasWorkflow(unittest.TestCase):
         for command in ('demo', 'make', 'paint', 'finish', 'showcase', 'film', 'tease'):
             self.assertIn(command, result.stdout)
         self.assertNotIn('training', result.stdout)
+
+    def test_doctor_names_missing_ffmpeg_instead_of_repeating_setup(self):
+        output = io.StringIO()
+        with patch.object(atlas.shutil, 'which', return_value=None), redirect_stdout(output):
+            self.assertEqual(atlas.doctor(), 1)
+        report = json.loads(output.getvalue())
+        self.assertTrue(report['checks']['python_dependencies'])
+        self.assertIn('FFmpeg', report['next'])
+        self.assertIn('atlas.py demo', report['next'])
 
 
 if __name__ == '__main__':
