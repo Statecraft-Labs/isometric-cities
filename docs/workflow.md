@@ -2,7 +2,7 @@
 
 Apple Silicon macOS. `./setup.sh` installs source/export dependencies. Add `--models` to install a separate Python 3.12 MFlux runtime under `outputs/image-runtime` and download the pinned model and adapter, about 9 GB, public and ungated. Weights remain in the Hugging Face cache. The tested image environment, including transitive dependencies, is pinned in `source/image-requirements.txt`. FFmpeg is required for films and GIFs. Node is optional, used by the UI tests.
 
-Development used one 128 GB Mac. A 512-pixel native job peaked at 18 GB of MLX memory and took under 30 seconds. Smaller machines are untested.
+Development used one 128 GB Mac. A native 1024-pixel window peaked at 18.3 GB of MLX memory and took about two and a half minutes, model load included. Smaller machines are untested.
 
 ## Choose and inspect the source
 
@@ -43,9 +43,9 @@ The supplied source is already registered. Acquiring a fresh Edinburgh surface c
 
 Repeat the pilot command with `--style --wait`. Use `--caption-file PATH` for visible materials and `--preset PATH` for another pinned model. The default is distilled Klein 9B q4 with Pixel Art Redmond at 0.7, four steps, CFG 1 and seed 4601. Name dominant materials only. Naming a rare material globally can spread it onto other roofs.
 
-Styling runs in a fresh isolated MFlux worker using the downloaded pins. It runs offline, verifies native conditioning dimensions before inference, and serializes GPU workers. It never changes installed model code. There is no cloud fallback.
+Styling runs in a fresh isolated MFlux worker using the downloaded pins. It runs offline, verifies native conditioning dimensions before inference, and serializes GPU workers. It never changes installed model code. There is no cloud fallback. It needs Metal GPU access. If `native-worker.log` reports `No Metal device available`, as it did inside one coding agent's command sandbox, move to a shell with GPU access. The failed job is kept and never relaunched, so give a pilot a fresh `--out`; for `paint`, use the failed-window recovery below.
 
-The example maps were made differently: through `imagine`, a private local job queue running the same pinned model, adapter and settings. A compatible queue client is still used when `ATLAS_IMAGINE` names one or one is installed, and the worker then stands down so only one model loads. An unrelated program that merely shares the name is ignored. The native worker has produced one inspected 512-pixel image on the stock pinned runtime. A full map through it is untested, and so is byte equality with the queue's output.
+The example maps were made differently: through `imagine`, a private local job queue running the same pinned model, adapter and settings. A compatible queue client is still used when `ATLAS_IMAGINE` names one or one is installed, and the worker then stands down so only one model loads. An unrelated program that merely shares the name is ignored. The native worker has repainted the full Edinburgh example from a fresh clone on the stock pinned runtime: 10 windows in 24 minutes. The result has the same style and layout as the queue's paint, with small differences in detail. It is not byte-identical, so the bundled finishing recipe refuses it, as its hash guard should. DC through the worker is untested.
 
 Receipts advance through resolved, source-ready, queued, art-ready and reviewed. `--wait` checks an existing job for up to 45 seconds. Repeat to resume. Interrupted submissions recover their ID from the saved log; ambiguous submissions require inspecting that log and never submit twice automatically. A native worker that exits without a result is reported as failed at once. Changed recipes, source pixels, model settings and captions require a fresh `--out`.
 

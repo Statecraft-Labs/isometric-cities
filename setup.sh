@@ -32,4 +32,5 @@ from local_style import model_paths
 print('Pinned model and adapter ready:',model_paths(preset))
 PY
 fi
-"$repo_dir/.venv/bin/python" "$repo_dir/atlas.py" doctor
+# A missing FFmpeg only stops films and GIFs. The demo runs without it, so setup still succeeds.
+"$repo_dir/.venv/bin/python" "$repo_dir/atlas.py" doctor || true

@@ -19,7 +19,7 @@ Make an isometric map of [CITY/AREA]. Review one accurate patch, then expand it.
 
 Your agent sources real data, reviews a styled patch, then grows the map and exports an explorer and a film. Rendering and inference run locally on Apple Silicon; 128 GB tested, about 9 GB of weights.
 
-Quality depends on available data. `make "PLACE"` starts with untextured geometry; the agent improves it before painting. The bundled native painter has been checked on a 512-pixel image; full-map inference through it remains untested. [Method and limits](docs/workflow.md).
+Quality depends on available data. `make "PLACE"` starts with untextured geometry; the agent improves it before painting. The bundled native painter repainted the whole Edinburgh example from a fresh clone: 10 windows in 24 minutes, 18 GB at peak. Other cities and smaller Macs are untested. [Method and limits](docs/workflow.md).
 
 ## Explore the examples
 
