@@ -1,0 +1,6 @@
+#!/bin/sh
+# ATLAS_IMAGINE client for Linux with an NVIDIA GPU; submit prints "[imagine] queued ID".
+root=$(dirname "$(dirname "$(readlink -f "$0")")")
+python="$root/outputs/cuda-runtime/bin/python"
+[ -x "$python" ] || { echo "CUDA image runtime missing: $python" >&2; exit 1; }
+exec "$python" -I "$root/source/cuda_imagine.py" "$@"

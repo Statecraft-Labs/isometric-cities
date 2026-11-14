@@ -1,0 +1,35 @@
+{
+  "name": "Pixel Art Redmond, local Klein 9B pilot (Linux CUDA, diffusers bf16)",
+  "status": "Same base model family, adapter, scale, steps, guidance and seed as the bundled preset; bf16 diffusers weights on CUDA instead of the MLX q4 build, so pixels differ from the Mac runtime",
+  "base": {
+    "repo": "black-forest-labs/FLUX.2-klein-9B",
+    "revision": "92196c8e11f7b6cf2b7493e037d8c5345c559216",
+    "model_type": "flux2-klein-9b",
+    "architecture": "FLUX.2 Klein 9B distilled, bf16",
+    "licence": "FLUX Non-Commercial"
+  },
+  "adapter": {
+    "repo": "artificialguybr/PIXELART-REDMOND-FLUXKLEIN9B",
+    "revision": "6da3f88529e4be570f445de0a2814cc30c502f9f",
+    "filename": "[FLUX.2.Klein]PixelArt_Redmond.safetensors",
+    "sha256": "f7e4fdead5391dea3df8bb03a75b8607c13902bf0b3655bd738a63cf7d7803cb",
+    "trigger": "Pixel Art, PixArFK.",
+    "licence": "Apache-2.0"
+  },
+  "inference": {
+    "queue_route": "klein9b",
+    "steps": 4,
+    "guidance": 1.0,
+    "seed": 4601,
+    "adapter_scale": 0.7,
+    "scales_tested": [
+      1.0,
+      0.7
+    ],
+    "max_native_reference_area": 1048576,
+    "window": 1024
+  },
+  "note": "Native 1024-square edits through the source/cuda-imagine queue on Linux with an NVIDIA GPU, composed through neighbour-aware context infill for larger maps. No silent reference shrinking, cloud teacher or local training.",
+  "materials_rule": "The caption names only dominant materials supported by this city source. Rare materials are supplied by source pixels, not global prompt nouns.",
+  "large_canvas_route": "Neighbour-aware context infill with 1024 native windows and a 128 px overlap feather. This is not shared-latent denoising."
+}
