@@ -5,7 +5,7 @@
   "height": 4096,
   "status": "Source-grounded illustrative pixel-art map",
   "source_sha256": "1feba13d7d745da5f94c458caf0d0491aa0fb3533adcad7833ab7a8a330be386",
-  "image_sha256": "7cd2ebc4cc3f11a74ac9d3ee65a7b0f4258f18168c3e8e7ce01881a65c6cc001",
+  "image_sha256": "2fe642ccde7e71144b499d8c18d3089c7817e57cfe74e8d03a4bd93339e32edb",
   "camera": {
     "type": "orthographic",
     "azimuth_degrees": 225,
@@ -67,7 +67,7 @@
     "seed_start": 4601,
     "finishing": {
       "recipe": "examples/dc-finish.json",
-      "recipe_sha256": "75bb62c85446b9f16506f3149ca4aae98d88d9c001200d2a5e1e427b6aa93b81",
+      "recipe_sha256": "cfe0074a92f8b1fa00bf50254cdba608b5ff417519b66cbeb19c51e08c38ece2",
       "changes": [
         {
           "name": "Washington Monument source-checked lawn repair",
@@ -85,6 +85,15 @@
           "position": [
             706,
             2534
+          ]
+        },
+        {
+          "name": "National Mall lawn panel: invented pool removed",
+          "pixels": 20121,
+          "image_sha256": "3cfe302f90b5d865696705bbbd8ee5795fe701b6cb4db6e2956755aa8deacbc6",
+          "position": [
+            5446,
+            1689
           ]
         }
       ],
